@@ -3,8 +3,6 @@ import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
     GptMessage,
     TextMessageBox,
-    TextMessageBoxFile,
-    TextMessageBoxSelect,
     TypingLoader,
 } from "../../components/index.components";
 
@@ -51,18 +49,10 @@ export const OrthographyPage = () => {
                     )}
                 </div>
             </div>
-            {/* <TextMessageBox
+            <TextMessageBox
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a corregir"
                 enableCorrections={false}
-            /> */}
-            <TextMessageBoxSelect
-                onSendMessage={console.log}
-                placeholder="Escribe el texto a corregir"
-                options={[
-                    { id: "1", text: "Hola" },
-                    { id: "2", text: "Adios" },
-                ]}
             />
         </div>
     );

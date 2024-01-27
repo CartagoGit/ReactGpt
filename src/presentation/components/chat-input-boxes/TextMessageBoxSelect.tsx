@@ -54,10 +54,10 @@ export const TextMessageBoxSelect = ({
                         }
                     >
                         <option
-                            className="bg-blue-500 text-white"
+                            className="bg-blue-600 text-white"
                             value={undefined}
                         >
-                            Seleccione una opción
+                            Seleccionar
                         </option>
                         {options.map(({ id, text }) => (
                             <option key={id} value={id}>
