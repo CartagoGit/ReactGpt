@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
     GptMessage,
-    TextMessageBox,
+    UserMessage,
     TypingLoader,
-} from "../../components/index.components";
+    TextMessageBox,
+} from "../components/index.components";
 
 interface IMessage {
     text: string;
@@ -16,17 +16,17 @@ const initMessage: IMessage = {
     isGpt: true,
 };
 
-export const OrthographyPage = () => {
+export const ChatTemplate = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
 
     const handlePost = async (text: string) => {
-		if(isLoading) return;
+        if (isLoading) return;
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
-		// TODO UseCase
-		setIsLoading(false);
-		// TODO Añadir la respuesta con isGpt: true
+        // TODO UseCase
+        setIsLoading(false);
+        // TODO Añadir la respuesta con isGpt: true
     };
 
     return (
