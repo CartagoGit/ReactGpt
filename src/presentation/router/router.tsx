@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 
 import {
 	AssistantPage,
@@ -34,8 +34,6 @@ export const menuRoutes = [
 		title: 'Como stream',
 		description: 'Con stream de mensajes',
 		component: <ProsConsStreamPage />,
-		jaja: 2,
-		boolean: true,
 	},
 	{
 		to: '/translate',
@@ -90,6 +88,10 @@ export const router = createBrowserRouter([
 				path: route.to,
 				element: route.component,
 			})),
+			{
+				path: '',
+				element: <Navigate to={menuRoutes[0].to} />,
+			},
 		],
 	},
 ]);
