@@ -13,7 +13,15 @@ import {
 } from '../pages/index.pages';
 import { DashboardLayout } from '../layouts/DashboardLayout';
 
-export const menuRoutes = [
+export interface IMenuRoutes {
+	to: string;
+	icon: string;
+	title: string;
+	description: string;
+	component: JSX.Element;
+}
+
+export const menuRoutes: IMenuRoutes[] = [
 	{
 		to: '/orthography',
 		icon: 'fa-solid fa-spell-check',
