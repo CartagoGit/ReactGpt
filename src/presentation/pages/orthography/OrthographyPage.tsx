@@ -3,6 +3,7 @@ import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
     GptMessage,
     TextMessageBox,
+    TextMessageBoxFile,
     TypingLoader,
 } from "../../components/index.components";
 
@@ -21,12 +22,12 @@ export const OrthographyPage = () => {
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
 
     const handlePost = async (text: string) => {
-		if(isLoading) return;
+        if (isLoading) return;
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
-		// TODO UseCase
-		setIsLoading(false);
-		// TODO Añadir la respuesta con isGpt: true
+        // TODO UseCase
+        setIsLoading(false);
+        // TODO Añadir la respuesta con isGpt: true
     };
 
     return (
@@ -52,7 +53,7 @@ export const OrthographyPage = () => {
             <TextMessageBox
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a corregir"
-                enableCorrections
+                enableCorrections={false}
             />
         </div>
     );
