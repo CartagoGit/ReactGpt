@@ -1,6 +1,17 @@
-import {  createBrowserRouter } from "react-router-dom";
-import { AssistantPage, AudioToTextPage, ImageGenerationPage, ImageTunningPage, OrthographyPage, ProsConsPage, ProsConsStreamPage, TextToAudioPage, TranslatePage } from '../pages/index.pages';
-import { DashboardLayout } from "../layouts/DashboardLayout";
+import { createBrowserRouter } from 'react-router-dom';
+
+import {
+	AssistantPage,
+	AudioToTextPage,
+	ImageGenerationPage,
+	ImageTunningPage,
+	OrthographyPage,
+	ProsConsPage,
+	ProsConsStreamPage,
+	TextToAudioPage,
+	TranslatePage,
+} from '../pages/index.pages';
+import { DashboardLayout } from '../layouts/DashboardLayout';
 
 export const menuRoutes = [
 	{
@@ -23,8 +34,8 @@ export const menuRoutes = [
 		title: 'Como stream',
 		description: 'Con stream de mensajes',
 		component: <ProsConsStreamPage />,
-        jaja: 2,
-        boolean: true
+		jaja: 2,
+		boolean: true,
 	},
 	{
 		to: '/translate',
@@ -70,10 +81,15 @@ export const menuRoutes = [
 	},
 ];
 
-
-export const router = createBrowserRouter([{
-	
-    path: '/',	
-    element: <DashboardLayout />,
-    children: []
-}])
+export const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <DashboardLayout />,
+		children: [
+			...menuRoutes.map((route) => ({
+				path: route.to,
+				element: route.component,
+			})),
+		],
+	},
+]);
