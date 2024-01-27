@@ -3,7 +3,7 @@
     {
       "files": ["*.tsx", "*.jsx"],
       "options": {
-        "tabWidth": 2
+        "tabWidth": 4
       }
     }
   ]
