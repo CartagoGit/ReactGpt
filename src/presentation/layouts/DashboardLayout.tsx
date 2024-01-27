@@ -15,7 +15,7 @@ export const DashboardLayout = () => {
 				<div className="border-gray-700 border my-3" />
 				{menuRoutes.map((route) => (
 					<SidebarMenuItem
-						route={route}
+						{...route}
 						key={route.to}
 					/>
 				))}

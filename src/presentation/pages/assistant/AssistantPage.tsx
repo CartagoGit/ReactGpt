@@ -1,3 +1,3 @@
 export const AssistantPage = () => {
-	return <div></div>;
+	return <div>Asistant</div>;
 };
