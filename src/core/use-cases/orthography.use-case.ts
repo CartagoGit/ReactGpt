@@ -1,8 +1,8 @@
 
 export const orthographyUseCase = (prompt: string) => {
     try {
-        
-    }catch(erro){
+        console.log(prompt)
+    }catch(error){
 
     }
 }
