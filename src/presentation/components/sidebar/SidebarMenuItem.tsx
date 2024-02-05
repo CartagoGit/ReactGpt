@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { IMenuRoutes } from '../../router/main-router';
+import { IMenuRoutes } from '../../router/main.router';
 
 export const SidebarMenuItem = (route: IMenuRoutes) => {
 	const { to, icon, title, description } = route;
