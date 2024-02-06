@@ -1,11 +1,11 @@
-export interface ErrorResponse {
+export interface IErrorResponse {
   message: string;
   error: any;
   ok: false;
 }
 
-export type OkResponse<T extends { data: any }> = { ok: true } & T["data"];
+export type IOkResponse<T extends { data: any }> = { ok: true } & T["data"];
 
-export type Fetch<T extends { data: any }> = Promise<
-  ErrorResponse | OkResponse<T>
+export type IFetch<T extends { data: any }> = Promise<
+  IErrorResponse | IOkResponse<T>
 >;

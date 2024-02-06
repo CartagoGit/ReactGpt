@@ -1,4 +1,4 @@
-export interface OrthographyResponse {
+export interface IOrthographyResponse {
   data: {
     result: string;
     accuracy: number;

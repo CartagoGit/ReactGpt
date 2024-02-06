@@ -1,12 +1,12 @@
 import type {
-  Fetch,
-  OrthographyResponse,
+  IFetch,
+  IOrthographyResponse,
 } from "../../interfaces/index.interfaces";
 import { CONSTANTS } from "../config/config";
 
 export const orthographyUseCase = async (
   prompt: string
-): Fetch<OrthographyResponse> => {
+): IFetch<IOrthographyResponse> => {
   const errorMessage = "No se pudo realizar la correción ortográfica";
   try {
     const resp = await fetch(`${CONSTANTS.GPT_URL}/orthography/check`, {
@@ -15,7 +15,7 @@ export const orthographyUseCase = async (
       body: JSON.stringify({ prompt }),
     });
     if (!resp.ok) throw new Error(errorMessage);
-    const { data }: OrthographyResponse = await resp.json();
+    const { data }: IOrthographyResponse = await resp.json();
     return {
       ok: true,
       ...data,

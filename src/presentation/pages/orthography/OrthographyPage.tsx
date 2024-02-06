@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
-    GptMessage,
+    GptMessageOrthography,
     TextMessageBox,
     TypingLoader,
 } from "../../components/index.components";
 import { orthographyUseCase } from "../../../core/use-cases/index.use-cases";
-
-
+import { IOrthographyResponse } from "../../../interfaces/orthography.interface";
 
 interface IMessage {
     text: string;
     isGpt: boolean;
+    info?: IOrthographyResponse["data"];
 }
 
 const initMessage: IMessage = {
-    text: "Hola, puedes escribir en español, y te ayudo con las correcciones",
+    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
     isGpt: true,
 };
 
@@ -29,9 +29,18 @@ export const OrthographyPage = () => {
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         const resp = await orthographyUseCase(text);
         console.log(resp);
-        // TODO UseCase
         setIsLoading(false);
-        // TODO Añadir la respuesta con isGpt: true
+        if (!resp.ok)
+            return setMessages((prev) => [
+                ...prev,
+                { text: resp.message, isGpt: true },
+            ]);
+
+        const { result } = resp;
+        setMessages((prev) => [
+            ...prev,
+            { text: result, isGpt: true, info: resp },
+        ]);
     };
 
     return (
@@ -40,9 +49,15 @@ export const OrthographyPage = () => {
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
 
-                    {messages.map(({ isGpt, text }, index) => {
+                    {messages.map(({ isGpt, text, info }, index) => {
                         if (isGpt) {
-                            return <GptMessage key={index} text={text} />;
+                            return (
+                                <GptMessageOrthography
+                                    key={index}
+                                    text={text}
+                                    info={info}
+                                />
+                            );
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }

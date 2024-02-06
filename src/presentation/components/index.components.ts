@@ -1,4 +1,5 @@
 export * from './chat-bubbles/GptMessage';
+export * from './chat-bubbles/GptMessageOrthography';
 export * from './chat-bubbles/UserMessage';
 
 export * from './loaders/TypingLoader';
