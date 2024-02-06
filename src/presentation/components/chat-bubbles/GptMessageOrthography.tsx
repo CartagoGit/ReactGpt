@@ -26,9 +26,7 @@ export const GptMessageOrthography = ({
                                 Precisión: {accuracy}%
                             </h3>
                             <p>{message}</p>
-                            {errors?.length === 0 ? (
-                                <p>No se encontraron errores</p>
-                            ) : (
+                            {errors?.length !== 0 && (
                                 <>
                                     <h3 className="mt-4 text-2xl">
                                         Errores encontrados:
