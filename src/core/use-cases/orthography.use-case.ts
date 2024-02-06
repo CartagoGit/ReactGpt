@@ -9,12 +9,11 @@ export const orthographyUseCase = async (
 ): Fetch<OrthographyResponse> => {
   const errorMessage = "No se pudo realizar la correción ortográfica";
   try {
-    const resp = await fetch(`${CONSTANTS.GPT_URL}/orthography-check`, {
+    const resp = await fetch(`${CONSTANTS.GPT_URL}/orthography/check`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),
     });
-    console.log(resp);
     if (!resp.ok) throw new Error(errorMessage);
     const { data }: OrthographyResponse = await resp.json();
     return {
