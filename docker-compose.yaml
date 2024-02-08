@@ -1,10 +1,20 @@
 version: "3.8"
 services:
   app:
-    container_name: ReactGpt
+    container_name: reactgpt-container
     build: .
     image: reactgpt
-    network_mode: host
+    ports:
+      - "7000:7000"
+    # network_mode: host
     volumes:
-      - .:/app
+      - .:/_projects/ReactGpt
+    # networks:
+    #   - gpt
     command: npm run dev
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+# networks:
+#   gpt:
+#     name: gpt

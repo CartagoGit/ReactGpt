@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-WORKDIR /app
+WORKDIR /_projects/ReactGpt
 
 COPY package*.json ./
 

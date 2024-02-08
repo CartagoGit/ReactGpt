@@ -15,7 +15,7 @@ interface IMessage {
 }
 
 const initMessage: IMessage = {
-    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
+    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.sd",
     isGpt: true,
 };
 
