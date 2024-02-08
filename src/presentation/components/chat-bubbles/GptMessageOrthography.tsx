@@ -20,15 +20,15 @@ export const GptMessageOrthography = ({
                         <Markdown>{text}</Markdown>
                     ) : (
                         <>
-                            <h3 className="text-2xl">Corrección:</h3>
+                            <h3 className="text-xl">Corrección:</h3>
                             <p>{text}</p>
-                            <h3 className="text-2xl mt-4">
+                            <h3 className="text-xl mt-4">
                                 Precisión: {accuracy}%
                             </h3>
                             <p>{message}</p>
                             {errors?.length !== 0 && (
                                 <>
-                                    <h3 className="mt-4 text-2xl">
+                                    <h3 className="mt-4 text-xl">
                                         Errores encontrados:
                                     </h3>
                                     <ul>
