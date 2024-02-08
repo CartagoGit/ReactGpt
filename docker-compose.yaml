@@ -1,6 +1,10 @@
 version: "3.8"
 services:
   app:
+    container_name: ReactGpt
     build: .
+    image: reactgpt
     network_mode: host
-    
+    volumes:
+      - .:/app
+    command: npm run dev
