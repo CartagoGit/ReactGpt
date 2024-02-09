@@ -2,22 +2,11 @@ version: "3.8"
 services:
   app:
     container_name: reactgpt-container
+    privileged: true
+    ports:
+      - "${VITE_PORT}:${VITE_PORT}"
     build: .
     image: reactgpt
-    ports:
-      - "7000:7000"
-    # network_mode: host
     volumes:
       - .:/_projects/ReactGpt
-    # networks:
-    #   - gpt
     command: yarn dev
-    # environment:
-    #   CHOKIDAR_USEPOLLING: true
-    #   WATCHPACK_POLLING: true
-    #   NODE_ENV: development
-    #   WDS_SOCKET_HOST: 127.0.0.1
-    #   VITE_SERVER_URL: http://localhost:7000
-# networks:
-#   gpt:
-#     name: gpt
