@@ -10,7 +10,7 @@ RUN yarn
 
 # COPY . .
 
-RUN chmod +x ./scripts/launch.sh
+# RUN chmod +x ./scripts/launch.sh
 
 
 CMD ["tail", "-f", "/dev/null", "sh", "-c"]
