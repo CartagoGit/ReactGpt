@@ -15,8 +15,7 @@ interface IMessage {
 }
 
 const initMessage: IMessage = {
-    // text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
-    text: "Hola ddsdssds",
+    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
     isGpt: true,
 };
 
@@ -49,7 +48,6 @@ export const OrthographyPage = () => {
             <div className="chat-messages">
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
-
                     {messages.map(({ isGpt, text, info }, index) => {
                         if (isGpt) {
                             return (
