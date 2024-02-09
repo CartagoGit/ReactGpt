@@ -9,7 +9,7 @@ export const orthographyUseCase = async (
 ): IFetch<IOrthographyResponse> => {
   const errorMessage = "No se pudo realizar la correción ortográfica";
   try {
-    const resp = await fetch(`${CONSTANTS.GPT_URL}/orthography/check`, {
+    const resp = await fetch(`${CONSTANTS.API_GPT_URL}/orthography/check`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt }),

@@ -11,13 +11,13 @@ services:
       - .:/_projects/ReactGpt
     # networks:
     #   - gpt
-    command: npm run dev
-    environment:
-      CHOKIDAR_USEPOLLING: true
-      WATCHPACK_POLLING: true
-      NODE_ENV: development
-      WDS_SOCKET_HOST: 127.0.0.1
-      VITE_SERVER_URL: http://localhost:7000
+    command: yarn dev
+    # environment:
+    #   CHOKIDAR_USEPOLLING: true
+    #   WATCHPACK_POLLING: true
+    #   NODE_ENV: development
+    #   WDS_SOCKET_HOST: 127.0.0.1
+    #   VITE_SERVER_URL: http://localhost:7000
 # networks:
 #   gpt:
 #     name: gpt

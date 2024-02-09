@@ -4,9 +4,9 @@ WORKDIR /_projects/ReactGpt
 
 COPY package*.json ./
 
-RUN npm i -g tsx yarn typescript 
+RUN yarn add -g tsx typescript 
 
-RUN npm install
+RUN yarn
 
 COPY . .
 
