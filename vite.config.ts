@@ -4,14 +4,9 @@ import react from "@vitejs/plugin-react-swc";
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    host: true,
+    host: '0.0.0.0',
     port: 7000,
-    hmr: {
-      // host: "localhost",
-      // port: 7000,
-      // clientPort: 7000,
-    
-    },
+    hmr: true,
     watch: {
       usePolling: true,
     },
