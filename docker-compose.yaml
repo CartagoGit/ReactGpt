@@ -1,20 +1,11 @@
 version: "3.8"
 services:
   app:
-    container_name: reactgpt-container
+    container_name:  ${DOCKER_IMAGE}-container
     ports:
       - "${VITE_PORT}:${VITE_PORT}"
     build: .
-    image: reactgpt
+    image: ${DOCKER_IMAGE}
     volumes:
-      - .:/_projects/ReactGpt
-    # entrypoint:
-    #   - chmod +x ./scripts/launch.sh
-    command: >
-      bash -c "chmod +x ./scripts/launch.sh &&
-               exec yarn dev"
-      # sh -c "chmod +x ./scripts/launch.sh" &&
-      # - "/bin/sh"
-      # - "-c"
-      # - "./scripts/launch.sh"
-      # - yarn dev
+      - .:/_projects/${PROJECT}
+    command: bash -c './scripts/launch.sh && yarn dev'

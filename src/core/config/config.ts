@@ -1,7 +1,9 @@
-const { VITE_API_GPT, VITE_API_HOST, VITE_API_PORT, VITE_PORT } = import.meta
-  .env;
+const { VITE_API_GPT, VITE_API_HOST, VITE_API_PORT, VITE_PORT, BASE_URL, MODE } =
+  import.meta.env;
 
 export const CONSTANTS = {
+  BASE_URL,
+  MODE,
   API_PORT: VITE_API_PORT,
   API_HOST: VITE_API_HOST,
   API_GPT_ENDPOINT: VITE_API_GPT,
