@@ -6,6 +6,7 @@ services:
     image: reactgpt
     ports:
       - "7000:7000"
+      - "5173:5173"
     # network_mode: host
     volumes:
       - .:/_projects/ReactGpt
@@ -13,8 +14,10 @@ services:
     #   - gpt
     command: npm run dev
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
+      CHOKIDAR_USEPOLLING: true
+      WATCHPACK_POLLING: true
+      NODE_ENV: development
+      WDS_SOCKET_HOST: 127.0.0.1
 # networks:
 #   gpt:
 #     name: gpt
