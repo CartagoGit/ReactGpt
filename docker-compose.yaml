@@ -2,11 +2,14 @@ version: "3.8"
 services:
   app:
     container_name: reactgpt-container
-    privileged: true
     ports:
       - "${VITE_PORT}:${VITE_PORT}"
     build: .
     image: reactgpt
     volumes:
       - .:/_projects/ReactGpt
-    command: yarn dev
+    command:  "ls -la ./scripts"
+      # - "/bin/sh"
+      # - "-c"
+      # - "./scripts/launch.sh"
+      # - yarn dev
