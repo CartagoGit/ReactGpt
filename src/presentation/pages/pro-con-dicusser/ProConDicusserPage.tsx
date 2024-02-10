@@ -5,7 +5,7 @@ import {
     TypingLoader,
     TextMessageBox,
 } from "../../components/index.components";
-import { proConDicusserUseCase } from "../../../core/use-cases/pro-con-dicusser.use-case";
+import { proConDicusserUseCase } from "../../../core/use-cases/index.use-cases";
 
 interface IMessage {
     text: string;

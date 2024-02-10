@@ -1,5 +1,5 @@
 import Markdown from "react-markdown";
-import { IMesssageOrthography } from "../../../interfaces/message.interface";
+import { IMesssageOrthography } from "../../../shared/interfaces/message.interface";
 
 export const GptMessageOrthography = ({
     text,

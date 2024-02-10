@@ -1,5 +1,5 @@
 import Markdown from "react-markdown";
-import { IMessage } from "../../../interfaces/message.interface";
+import { IMessage } from "../../../shared/interfaces/message.interface";
 
 export const GptMessage = ({ text, isError = false }: IMessage) => {
     return (

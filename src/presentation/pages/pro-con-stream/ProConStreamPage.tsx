@@ -5,7 +5,9 @@ import {
     TypingLoader,
     TextMessageBox,
 } from "../../components/index.components";
-import { proConStreamUseCase } from "../../../core/use-cases/pro-con-stream.use-case";
+
+import { useReadStream } from "../../../shared/hooks/index.hooks";
+import { proConStreamUseCase } from "../../../core/use-cases/index.use-cases";
 
 interface IMessage {
     text: string;
@@ -20,6 +22,7 @@ const initMessage: IMessage = {
 export const ProConStreamPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
+    const readStream = useReadStream(setMessages);
 
     const handlePost = async (text: string) => {
         if (isLoading) return;
@@ -33,9 +36,8 @@ export const ProConStreamPage = () => {
                 { text: resp.message, isGpt: true, isError: true },
             ]);
         }
-        
-        // const { content } = resp;
-        // setMessages((prev) => [...prev, { text: content, isGpt: true }]);
+        const { stream } = resp;
+        await readStream(stream);
     };
 
     return (

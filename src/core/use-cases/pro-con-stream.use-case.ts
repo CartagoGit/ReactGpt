@@ -1,5 +1,5 @@
-import { IFetch } from "../../interfaces/api.interface";
-import { IProConStreamResponse } from "../../interfaces/responses.interface";
+import { IFetch } from "../../shared/interfaces/api.interface";
+import { IProConStreamResponse } from "../../shared/interfaces/responses.interface";
 import { CONSTANTS } from "../config/config";
 import { endpoints } from "../config/endpoints.api";
 
@@ -22,20 +22,6 @@ export const proConStreamUseCase = async (
     if (!reader)
       throw new Error(`${errorMessage}. Problema al generar el lector`);
     return { ok: true, stream: reader };
-    // const decoder = new TextDecoder();
-    // let text = "";
-    // while (true) {
-    //   const { done, value } = await reader.read();
-    //   if (done) break;
-    //   const decodeChunk = decoder.decode(value, { stream: true });
-    //   text += decodeChunk;
-    //   console.log({ text, decodeChunk });
-    // }
-    //     const { data }:  = await resp.json();
-    //     return {
-    //       ok: true,
-    //       ...data,
-    //     };
   } catch (error) {
     return {
       ok: false,

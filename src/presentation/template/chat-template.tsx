@@ -6,7 +6,7 @@ import {
     TypingLoader,
 } from "../components/index.components";
 
-import { IMessage } from "../../interfaces/message.interface";
+import { IMessage } from "../../shared/interfaces/message.interface";
 
 const initMessage: IMessage = {
     text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",

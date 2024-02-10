@@ -1,7 +1,7 @@
 import type {
   IFetch,
   IOrthographyResponse,
-} from "../../interfaces/index.interfaces";
+} from "../../shared/interfaces/index.interfaces";
 import { CONSTANTS } from "../config/config";
 import { endpoints } from "../config/endpoints.api";
 

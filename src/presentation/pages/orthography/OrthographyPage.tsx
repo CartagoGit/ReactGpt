@@ -6,7 +6,7 @@ import {
     TypingLoader,
 } from "../../components/index.components";
 import { orthographyUseCase } from "../../../core/use-cases/index.use-cases";
-import { IMesssageOrthography } from "../../../interfaces/message.interface";
+import { IMesssageOrthography } from "../../../shared/interfaces/message.interface";
 
 const initMessage: IMesssageOrthography = {
     text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
