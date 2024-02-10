@@ -1,10 +1,10 @@
 version: "3.8"
 services:
   app:
-    container_name:  ${DOCKER_IMAGE}-container
+    container_name: ${DOCKER_IMAGE}-container
     ports:
       - "${VITE_PORT}:${VITE_PORT}"
-    build: 
+    build:
       context: .
       args:
         - PROJECT=${PROJECT}
@@ -12,4 +12,7 @@ services:
     image: ${DOCKER_IMAGE}
     volumes:
       - .:/_projects/${PROJECT}
-    command: yarn dev
+    command: bun run dev
+    init: true
+    ulimits:
+      memlock: -1

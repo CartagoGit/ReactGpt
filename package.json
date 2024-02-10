@@ -8,8 +8,8 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "launch": "npm run dev",
-    "launch:nestgpt": "cd ../NestGpt && npm dev",
+    "launch": "bun run dev",
+    "launch:nestgpt": "cd ../NestGpt && bun run dev",
     "docker:up": "docker-compose up",
     "docker:nestgpt": "cd ../NestGpt && docker-compose up"
   },
@@ -31,6 +31,7 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.33",
     "sass": "^1.70.0",
+    "tailwind-scrollbar": "3.1.0-rc.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"

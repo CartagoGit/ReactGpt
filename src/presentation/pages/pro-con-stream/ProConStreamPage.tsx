@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
     GptMessage,
     UserMessage,
@@ -23,6 +23,13 @@ export const ProConStreamPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
     const readStream = useReadStream(setMessages);
+    const chatRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (chatRef.current) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [messages]); 
 
     const handlePost = async (text: string) => {
         if (isLoading) return;
@@ -42,7 +49,7 @@ export const ProConStreamPage = () => {
 
     return (
         <div className="chat-container">
-            <div className="chat-messages">
+            <div className="chat-messages" ref={chatRef}>
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
 

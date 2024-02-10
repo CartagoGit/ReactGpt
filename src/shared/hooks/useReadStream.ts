@@ -15,7 +15,6 @@ export const useReadStream = (
         if (done) break;
         const decodeChunk = decoder.decode(value, { stream: true });
         result += decodeChunk;
-        console.log("decodeChunk", result);
         setMessages(([...prev]) => {
           prev.at(-1)!.text = result;
           return prev;
