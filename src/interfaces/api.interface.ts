@@ -1,10 +1,8 @@
-export type IResponseData = { data: any };
-
-type IResponse = { [key: string]: any };
-
-export type IOkResponse<T extends IResponse> = {
+//* If the reponse JUST has a data property, then return the data property, else return the whole response
+export type IOkResponse<T> = {
   ok: true;
-} & (T extends IResponseData & {
+} & // Check if the response has JUST a data property
+(T extends { data: any } & {
   [K in keyof T]: K extends "data" ? any : never;
 }
   ? T["data"]
@@ -16,6 +14,4 @@ export interface IErrorResponse {
   ok: false;
 }
 
-export type IFetch<T extends IResponse> = Promise<
-  IErrorResponse | IOkResponse<T>
->;
+export type IFetch<T> = Promise<IErrorResponse | IOkResponse<T>>;

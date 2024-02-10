@@ -33,7 +33,7 @@ export const ProConStreamPage = () => {
                 { text: resp.message, isGpt: true, isError: true },
             ]);
         }
-
+        
         // const { content } = resp;
         // setMessages((prev) => [...prev, { text: content, isGpt: true }]);
     };
