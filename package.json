@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "launch": "npm run dev",
+    "launch:nestgpt": "cd ../NestGpt && npm dev",
+    "docker:up": "docker-compose up",
+    "docker:nestgpt": "cd ../NestGpt && docker-compose up"
   },
   "dependencies": {
     "react": "^18.2.0",
