@@ -1,18 +1,15 @@
 import { useState } from "react";
+import { UserMessage } from "../components/chat-bubbles/UserMessage";
 import {
-    GptMessage,
-    UserMessage,
-    TypingLoader,
+    GptMessageOrthography,
     TextMessageBox,
+    TypingLoader,
 } from "../components/index.components";
 
-interface IMessage {
-    text: string;
-    isGpt: boolean;
-}
+import { IMessage } from "../../interfaces/message.interface";
 
 const initMessage: IMessage = {
-    text: "Hola, puedes escribir en español, y te ayudo con las correcciones",
+    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
     isGpt: true,
 };
 
@@ -25,8 +22,21 @@ export const ChatTemplate = () => {
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         // TODO UseCase
+        // const resp = await useCase(text);
         setIsLoading(false);
-        // TODO Añadir la respuesta con isGpt: true
+        // TODO Añadir la respuesta con isGpt: true, e isError: true si es necesario
+        // if (!resp.ok) {
+        //     return setMessages((prev) => [
+        //         ...prev,
+        //         { text: resp.message, isGpt: true, isError: true },
+        //     ]);
+        // }
+
+        // const { result } = resp;
+        // setMessages((prev) => [
+        //     ...prev,
+        //     { text: result, isGpt: true, info: resp },
+        // ]);
     };
 
     return (
@@ -34,10 +44,15 @@ export const ChatTemplate = () => {
             <div className="chat-messages">
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
-
-                    {messages.map(({ isGpt, text }, index) => {
+                    {messages.map((message, index) => {
+                        const { isGpt, text } = message;
                         if (isGpt) {
-                            return <GptMessage key={index} text={text} />;
+                            return (
+                                <GptMessageOrthography
+                                    key={index}
+                                    {...message}
+                                />
+                            );
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }
@@ -52,7 +67,7 @@ export const ChatTemplate = () => {
             <TextMessageBox
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a corregir"
-                enableCorrections
+                enableCorrections={false}
             />
         </div>
     );
