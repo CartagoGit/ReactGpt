@@ -2,11 +2,12 @@ FROM node:20-alpine
 
 # Get from .env
 ARG PROJECT
+RUN echo "Project: ${PROJECT}"
 
 # Install bash
 RUN apk add --no-cache bash
 
-WORKDIR /_projects/${PROYECT}
+WORKDIR /_projects/${PROJECT}
 
 COPY package*.json ./
 

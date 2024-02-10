@@ -4,8 +4,12 @@ services:
     container_name:  ${DOCKER_IMAGE}-container
     ports:
       - "${VITE_PORT}:${VITE_PORT}"
-    build: .
+    build: 
+      context: .
+      args:
+        - PROJECT=${PROJECT}
+      dockerfile: Dockerfile
     image: ${DOCKER_IMAGE}
     volumes:
       - .:/_projects/${PROJECT}
-    command: bash -c './scripts/launch.sh && yarn dev'
+    command: yarn dev
