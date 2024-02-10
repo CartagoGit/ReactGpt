@@ -4,7 +4,7 @@ import { IMesssageOrthography } from "../../../interfaces/message.interface";
 export const GptMessageOrthography = ({
     text,
     info,
-    isError,
+    isError = false,
 }: IMesssageOrthography) => {
     const { accuracy, errors, message } = info || {};
     return (
@@ -15,7 +15,7 @@ export const GptMessageOrthography = ({
                 </div>
                 <div className="relative ml-3 text-sm bg-black bg-opacity-25 py-2 px-4 shadow rounded-xl whitespace-pre-line">
                     {!info ? (
-                        <Markdown className={isError ? "text-red" : null}>
+                        <Markdown className={isError ? "text-red-700" : null}>
                             {text}
                         </Markdown>
                     ) : (

@@ -52,7 +52,7 @@ export const ProConStreamPage = () => {
             </div>
             <TextMessageBox
                 onSendMessage={handlePost}
-                placeholder="Escribe el texto a corregir"
+                placeholder="Escribe pros y contras para compararlos."
                 enableCorrections
             />
         </div>
