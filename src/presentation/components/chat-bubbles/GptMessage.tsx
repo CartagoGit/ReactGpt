@@ -1,10 +1,8 @@
 import Markdown from 'react-markdown';
+import { IMessage } from '../../../interfaces/message.interface';
 
-interface IProps {
-	text: string;
-}
 
-export const GptMessage = ({ text }: IProps) => {
+export const GptMessage = ({ text }: IMessage) => {
 	return (
 		<div className="col-start-1 col-end-9 p-3 rounded-lg">
 			<div className="flex flex-row items-start">

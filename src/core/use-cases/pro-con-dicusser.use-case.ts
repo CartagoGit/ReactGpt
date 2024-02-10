@@ -3,17 +3,21 @@ import type {
   IProConDicusserResponse,
 } from "../../interfaces/index.interfaces";
 import { CONSTANTS } from "../config/config";
+import { endpoints } from "../config/endpoints.api";
 
-export const proConsUseCase = async (
+export const proConDicusserUseCase = async (
   prompt: string
 ): IFetch<IProConDicusserResponse> => {
-  const errorMessage = "No se pudo realizar la correción ortográfica";
+  const errorMessage = "No se pudo realizar la comparación de pros y contras";
   try {
-    const resp = await fetch(`${CONSTANTS.API_GPT_URL}/pro-con/dicusser`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt }),
-    });
+    const resp = await fetch(
+      `${CONSTANTS.API_GPT_URL}${endpoints.proCon.discuss}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      }
+    );
     if (!resp.ok) throw new Error(errorMessage);
     const { data }: IProConDicusserResponse = await resp.json();
     return {

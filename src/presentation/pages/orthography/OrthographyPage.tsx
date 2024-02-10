@@ -6,22 +6,18 @@ import {
     TypingLoader,
 } from "../../components/index.components";
 import { orthographyUseCase } from "../../../core/use-cases/index.use-cases";
-import type { IOrthographyResponse } from "../../../interfaces/index.interfaces";
+import { IMesssageOrthography } from "../../../interfaces/message.interface";
 
-interface IMessage {
-    text: string;
-    isGpt: boolean;
-    info?: IOrthographyResponse["data"];
-}
-
-const initMessage: IMessage = {
+const initMessage: IMesssageOrthography = {
     text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
     isGpt: true,
 };
 
 export const OrthographyPage = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [messages, setMessages] = useState<IMessage[]>([initMessage]);
+    const [messages, setMessages] = useState<IMesssageOrthography[]>([
+        initMessage,
+    ]);
 
     const handlePost = async (text: string) => {
         if (isLoading) return;
@@ -29,11 +25,12 @@ export const OrthographyPage = () => {
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         const resp = await orthographyUseCase(text);
         setIsLoading(false);
-        if (!resp.ok)
+        if (!resp.ok) {
             return setMessages((prev) => [
                 ...prev,
-                { text: resp.message, isGpt: true },
+                { text: resp.message, isGpt: true, isError: true },
             ]);
+        }
 
         const { result } = resp;
         setMessages((prev) => [
@@ -47,13 +44,13 @@ export const OrthographyPage = () => {
             <div className="chat-messages">
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
-                    {messages.map(({ isGpt, text, info }, index) => {
+                    {messages.map((message, index) => {
+                        const { isGpt, text } = message;
                         if (isGpt) {
                             return (
                                 <GptMessageOrthography
                                     key={index}
-                                    text={text}
-                                    info={info}
+                                    {...message}
                                 />
                             );
                         } else {

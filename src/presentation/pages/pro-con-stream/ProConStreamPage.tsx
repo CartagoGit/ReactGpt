@@ -12,7 +12,7 @@ interface IMessage {
 }
 
 const initMessage: IMessage = {
-    text: "Hola, puedes escribir en español, y te ayudo con las correcciones",
+    text: "Hola, escribe  lo que deseas que compare, y te ayudaré a encontrar los pros y contras. Iré mostrando la respuesta en tiempo real.",
     isGpt: true,
 };
 
@@ -23,7 +23,7 @@ export const ProConStreamPage = () => {
     const handlePost = async (text: string) => {
         if (isLoading) return;
         setIsLoading(true);
-        setMessages((prev) => [...prev, { text, isGpt: false }]);
+        setMessages((prev) => [...prev, { text, isGpt: false, isError: true }]);
         // TODO UseCase
         setIsLoading(false);
         // TODO Añadir la respuesta con isGpt: true
@@ -35,9 +35,10 @@ export const ProConStreamPage = () => {
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
 
-                    {messages.map(({ isGpt, text }, index) => {
+                    {messages.map((message, index) => {
+                        const { isGpt, text } = message;
                         if (isGpt) {
-                            return <GptMessage key={index} text={text} />;
+                            return <GptMessage key={index} {...message} />;
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }

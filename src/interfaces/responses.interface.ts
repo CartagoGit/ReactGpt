@@ -8,5 +8,12 @@ export interface IOrthographyResponse {
 }
 
 export interface IProConDicusserResponse {
-  data: {};
+  data: {
+    role: "assistant";
+    content: string;
+  };
+}
+
+export interface IProConStreamResponse {
+  stream: {};
 }

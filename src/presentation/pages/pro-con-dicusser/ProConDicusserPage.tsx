@@ -5,6 +5,7 @@ import {
     TypingLoader,
     TextMessageBox,
 } from "../../components/index.components";
+import { proConDicusserUseCase } from "../../../core/use-cases/pro-con-dicusser.use-case";
 
 interface IMessage {
     text: string;
@@ -24,9 +25,16 @@ export const ProConDicusserPage = () => {
         if (isLoading) return;
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
-        // TODO UseCase
+        const resp = await proConDicusserUseCase(text);
         setIsLoading(false);
-        // TODO Añadir la respuesta con isGpt: true
+        if (!resp.ok) {
+            return setMessages((prev) => [
+                ...prev,
+                { text: resp.message, isGpt: true, isError: true },
+            ]);
+        }
+        const { content } = resp;
+        setMessages((prev) => [...prev, { text: content, isGpt: true }]);
     };
 
     return (
@@ -35,9 +43,10 @@ export const ProConDicusserPage = () => {
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
 
-                    {messages.map(({ isGpt, text }, index) => {
+                    {messages.map((message, index) => {
+                        const { isGpt, text } = message;
                         if (isGpt) {
-                            return <GptMessage key={index} text={text} />;
+                            return <GptMessage key={index} {...message} />;
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }

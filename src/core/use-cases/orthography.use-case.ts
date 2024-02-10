@@ -3,17 +3,21 @@ import type {
   IOrthographyResponse,
 } from "../../interfaces/index.interfaces";
 import { CONSTANTS } from "../config/config";
+import { endpoints } from "../config/endpoints.api";
 
 export const orthographyUseCase = async (
   prompt: string
 ): IFetch<IOrthographyResponse> => {
   const errorMessage = "No se pudo realizar la correción ortográfica";
   try {
-    const resp = await fetch(`${CONSTANTS.API_GPT_URL}/orthography/check`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt }),
-    });
+    const resp = await fetch(
+      `${CONSTANTS.API_GPT_URL}${endpoints.orthography.check}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      }
+    );
     if (!resp.ok) throw new Error(errorMessage);
     const { data }: IOrthographyResponse = await resp.json();
     return {

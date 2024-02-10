@@ -1,13 +1,11 @@
 import Markdown from "react-markdown";
-import { IOrthographyResponse } from "../../../interfaces/index.interfaces";
+import { IMesssageOrthography } from "../../../interfaces/message.interface";
 
 export const GptMessageOrthography = ({
     text,
     info,
-}: {
-    text: string;
-    info?: IOrthographyResponse["data"];
-}) => {
+    isError,
+}: IMesssageOrthography) => {
     const { accuracy, errors, message } = info || {};
     return (
         <div className="col-start-1 col-end-9 p-3 rounded-lg">
@@ -17,7 +15,9 @@ export const GptMessageOrthography = ({
                 </div>
                 <div className="relative ml-3 text-sm bg-black bg-opacity-25 py-2 px-4 shadow rounded-xl whitespace-pre-line">
                     {!info ? (
-                        <Markdown>{text}</Markdown>
+                        <Markdown className={isError ? "text-red" : null}>
+                            {text}
+                        </Markdown>
                     ) : (
                         <>
                             <h3 className="text-xl">Corrección:</h3>
