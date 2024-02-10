@@ -1,18 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
     GptMessage,
     UserMessage,
     TypingLoader,
     TextMessageBox,
 } from "../../components/index.components";
-
-import { useReadStream } from "../../../shared/hooks/index.hooks";
+import {
+    useError,
+    useReadStream,
+    useScrollToBottom,
+} from "../../../shared/hooks/index.hooks";
 import { proConStreamUseCase } from "../../../core/use-cases/index.use-cases";
-
-interface IMessage {
-    text: string;
-    isGpt: boolean;
-}
+import { IMessage } from "../../../shared/interfaces/index.interfaces";
 
 const initMessage: IMessage = {
     text: "Hola, escribe  lo que deseas que compare, y te ayudaré a encontrar los pros y contras. Iré mostrando la respuesta en tiempo real.",
@@ -23,13 +22,8 @@ export const ProConStreamPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
     const readStream = useReadStream(setMessages);
-    const chatRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (chatRef.current) {
-            chatRef.current.scrollTop = chatRef.current.scrollHeight;
-        }
-    }, [messages]); 
+    const setError = useError(setMessages);
+    const chatRef = useScrollToBottom(messages);
 
     const handlePost = async (text: string) => {
         if (isLoading) return;
@@ -37,14 +31,10 @@ export const ProConStreamPage = () => {
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         const resp = await proConStreamUseCase(text);
         setIsLoading(false);
-        if (!resp.ok) {
-            return setMessages((prev) => [
-                ...prev,
-                { text: resp.message, isGpt: true, isError: true },
-            ]);
-        }
-        const { stream } = resp;
-        await readStream(stream);
+        setMessages((prev) => [...prev, { text: "", isGpt: true }]);
+
+        if (!resp.ok) return setError(resp.message);
+        await readStream(resp.stream);
     };
 
     return (
