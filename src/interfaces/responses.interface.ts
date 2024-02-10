@@ -1,4 +1,6 @@
-export interface IOrthographyResponse {
+import { IResponseData, IResponseStream } from "./index.interfaces";
+
+export interface IOrthographyResponse extends IResponseData {
   data: {
     result: string;
     accuracy: number;
@@ -7,13 +9,13 @@ export interface IOrthographyResponse {
   };
 }
 
-export interface IProConDicusserResponse {
+export interface IProConDicusserResponse extends IResponseData {
   data: {
     role: "assistant";
     content: string;
   };
 }
 
-export interface IProConStreamResponse {
-  stream: {};
+export interface IProConStreamResponse extends IResponseStream {
+  stream: ReadableStreamDefaultReader<Uint8Array>;
 }

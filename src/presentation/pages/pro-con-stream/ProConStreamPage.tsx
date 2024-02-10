@@ -5,6 +5,7 @@ import {
     TypingLoader,
     TextMessageBox,
 } from "../../components/index.components";
+import { proConStreamUseCase } from "../../../core/use-cases/pro-con-stream.use-case";
 
 interface IMessage {
     text: string;
@@ -23,10 +24,19 @@ export const ProConStreamPage = () => {
     const handlePost = async (text: string) => {
         if (isLoading) return;
         setIsLoading(true);
-        setMessages((prev) => [...prev, { text, isGpt: false, isError: true }]);
-        // TODO UseCase
+        setMessages((prev) => [...prev, { text, isGpt: false }]);
+        const resp = await proConStreamUseCase(text);
         setIsLoading(false);
-        // TODO Añadir la respuesta con isGpt: true
+        if (!resp.ok) {
+            return setMessages((prev) => [
+                ...prev,
+                { text: resp.message, isGpt: true, isError: true },
+            ]);
+        }
+        
+        
+        // const { content } = resp;
+        // setMessages((prev) => [...prev, { text: content, isGpt: true }]);
     };
 
     return (
