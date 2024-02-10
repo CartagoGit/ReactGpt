@@ -4,6 +4,7 @@ import type {
 } from "../../shared/interfaces/index.interfaces";
 import { CONSTANTS } from "../config/config";
 import { endpoints } from "../config/endpoints.api";
+import { manageError } from "../helpers/index.helpers";
 
 export const proConDicusserUseCase = async (
   prompt: string
@@ -26,10 +27,6 @@ export const proConDicusserUseCase = async (
       ...data,
     };
   } catch (error) {
-    return {
-      ok: false,
-      message: errorMessage,
-      error,
-    };
+    return manageError({ error: error, message: errorMessage });
   }
 };

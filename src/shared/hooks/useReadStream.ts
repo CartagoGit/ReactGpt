@@ -5,6 +5,11 @@ import { IMessage } from "../interfaces/message.interface";
 export const useReadStream = (
   setMessages: Dispatch<SetStateAction<IMessage[]>>
 ) => {
+
+  function* generator(){
+
+  }
+
   const readStream = useCallback(
     async (stream: ReadableStreamDefaultReader<Uint8Array>) => {
       const decoder = new TextDecoder();
