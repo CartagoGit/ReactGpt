@@ -1,21 +1,22 @@
-import { IResponseData, IResponseStream } from "./index.interfaces";
+//* Responses from the API
 
-export interface IOrthographyResponse extends IResponseData {
+export interface IOrthographyResponse {
   data: {
     result: string;
     accuracy: number;
     message: string;
     errors: string[];
   };
+  // pepe: string;
 }
 
-export interface IProConDicusserResponse extends IResponseData {
+export interface IProConDicusserResponse {
   data: {
     role: "assistant";
     content: string;
   };
 }
 
-export interface IProConStreamResponse extends IResponseStream {
+export interface IProConStreamResponse {
   stream: ReadableStreamDefaultReader<Uint8Array>;
 }
