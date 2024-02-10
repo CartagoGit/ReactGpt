@@ -26,6 +26,7 @@ export const ProConDicusserPage = () => {
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         const resp = await proConDicusserUseCase(text);
+
         setIsLoading(false);
         if (!resp.ok) {
             return setMessages((prev) => [
@@ -33,6 +34,7 @@ export const ProConDicusserPage = () => {
                 { text: resp.message, isGpt: true, isError: true },
             ]);
         }
+
         const { content } = resp;
         setMessages((prev) => [...prev, { text: content, isGpt: true }]);
     };

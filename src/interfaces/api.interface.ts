@@ -4,13 +4,13 @@ export interface IErrorResponse {
   ok: false;
 }
 
-export type IOkResponse<T extends { data: any }> = { ok: true } & T["data"];
-export type IOkStream<T extends { stream: any }> = { ok: true } & T["stream"];
+type IData<T extends any = any> = { data: T };
 
-export type IFetch<T extends { data: any }> = Promise<
-  IErrorResponse | IOkResponse<T>
->;
+export type IOkResponse<T extends IData> = { ok: true } & T["data"];
+// export type IOkStream<T extends { stream: any }> = { ok: true } & T["stream"];
 
-export type IStream<T extends { stream: any }> = Promise<
-  IErrorResponse | IOkStream<T>
->;
+export type IFetch<T extends IData> = Promise<IErrorResponse | IOkResponse<T>>;
+
+// export type IStream<T extends { stream: any }> = Promise<
+//   IErrorResponse | IOkStream<T>
+// >;

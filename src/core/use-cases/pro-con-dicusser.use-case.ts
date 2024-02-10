@@ -18,6 +18,7 @@ export const proConDicusserUseCase = async (
         body: JSON.stringify({ prompt }),
       }
     );
+    
     if (!resp.ok) throw new Error(errorMessage);
     const { data }: IProConDicusserResponse = await resp.json();
     return {
