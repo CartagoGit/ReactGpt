@@ -6,3 +6,7 @@ export interface IOrthographyResponse {
     errors: string[];
   };
 }
+
+export interface IProConDicusserResponse {
+  data: {};
+}

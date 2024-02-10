@@ -1,25 +1,22 @@
 import { useState } from "react";
-import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
-    GptMessageOrthography,
-    TextMessageBox,
+    GptMessage,
+    UserMessage,
     TypingLoader,
+    TextMessageBox,
 } from "../../components/index.components";
-import { orthographyUseCase } from "../../../core/use-cases/index.use-cases";
-import type { IOrthographyResponse } from "../../../interfaces/index.interfaces";
 
 interface IMessage {
     text: string;
     isGpt: boolean;
-    info?: IOrthographyResponse["data"];
 }
 
 const initMessage: IMessage = {
-    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
+    text: "Hola, escribe  lo que deseas que compare, y te ayudaré a encontrar los pros y contras.",
     isGpt: true,
 };
 
-export const OrthographyPage = () => {
+export const ProConDicusserPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
 
@@ -27,19 +24,9 @@ export const OrthographyPage = () => {
         if (isLoading) return;
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
-        const resp = await orthographyUseCase(text);
+        // TODO UseCase
         setIsLoading(false);
-        if (!resp.ok)
-            return setMessages((prev) => [
-                ...prev,
-                { text: resp.message, isGpt: true },
-            ]);
-
-        const { result } = resp;
-        setMessages((prev) => [
-            ...prev,
-            { text: result, isGpt: true, info: resp },
-        ]);
+        // TODO Añadir la respuesta con isGpt: true
     };
 
     return (
@@ -47,15 +34,10 @@ export const OrthographyPage = () => {
             <div className="chat-messages">
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
-                    {messages.map(({ isGpt, text, info }, index) => {
+
+                    {messages.map(({ isGpt, text }, index) => {
                         if (isGpt) {
-                            return (
-                                <GptMessageOrthography
-                                    key={index}
-                                    text={text}
-                                    info={info}
-                                />
-                            );
+                            return <GptMessage key={index} text={text} />;
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }
@@ -70,7 +52,7 @@ export const OrthographyPage = () => {
             <TextMessageBox
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a corregir"
-                enableCorrections={false}
+                enableCorrections
             />
         </div>
     );
