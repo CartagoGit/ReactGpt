@@ -34,6 +34,7 @@ export const ProConStreamPage = () => {
         setMessages((prev) => [...prev, { text: "", isGpt: true }]);
 
         if (!resp.ok) return setError(resp.message);
+        
         await readStream(resp.stream);
     };
 

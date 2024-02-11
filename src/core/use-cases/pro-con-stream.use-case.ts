@@ -24,7 +24,7 @@ export const proConStreamUseCase = async (
     const reader = resp.body?.getReader();
     if (!reader)
       throw new Error(`${errorMessage}. Problema al generar el lector`);
-    return { ok: true, stream: reader, kind: "stream" };
+    return { ok: true, stream: reader };
   } catch (error) {
     return manageError({ error: error, message: errorMessage });
   }

@@ -25,7 +25,6 @@ export const proConDicusserUseCase = async (
     return {
       ok: true,
       gptMessage: data.content,
-      kind: "data",
       ...data,
     };
   } catch (error) {

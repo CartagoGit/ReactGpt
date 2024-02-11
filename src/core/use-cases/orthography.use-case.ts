@@ -24,7 +24,6 @@ export const orthographyUseCase = async (
     return {
       ok: true,
       gptMessage: data.result,
-      kind: 'data',
       ...data,
     };
   } catch (error) {
