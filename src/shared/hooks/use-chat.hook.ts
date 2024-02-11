@@ -1,36 +1,36 @@
-import { useCallback, useState } from "react";
-import { IFetch } from "../interfaces/api.interface";
-import { IMessage } from "../interfaces/message.interface";
+import { useState } from "react";
+
 import { useError, useReadStream, useScrollToBottom } from "./index.hooks";
+import { IFetch, IMessage } from "../interfaces/index.interfaces";
 
 export const useChat = <T extends object>(data: {
   initMessage: IMessage;
-  useCase: (text: string) => IFetch<T>;
+  request: (text: string) => IFetch<T>;
 }) => {
-  const { initMessage, useCase } = data;
+  const { initMessage, request } = data;
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<IMessage[]>([initMessage]);
   const readStream = useReadStream(setMessages);
   const setError = useError(setMessages);
   const chatRef = useScrollToBottom(messages);
 
-  const handlePost = useCallback(async (text: string) => {
+  const handlePost = async (text: string) => {
     if (isLoading) return;
     setIsLoading(true);
     setMessages((prev) => [...prev, { text, isGpt: false }]);
-    const resp = await useCase(text);
-    if (!resp.ok) return setError(resp.message);
-    setIsLoading(false);
-    if ("gptMessage" in resp) {
-      const gptMessage = resp.gptMessage as string;
-    } else if ("stream" in resp) {
-      const stream = resp.stream as ReadableStreamDefaultReader<Uint8Array>;
+    const resp = await request(text);
+    if (!resp.ok) {
       setMessages((prev) => [...prev, { text: "", isGpt: true }]);
-      await readStream(stream);
+      setIsLoading(false);
+      return setError(resp.message);
     }
-
-    setMessages((prev) => [...prev, { text: "", isGpt: true }]);
-  }, []);
+    if ("gptMessage" in resp) {
+      //   const gptMessage = resp.gptMessage as string;
+    } else if ("stream" in resp) {
+      await readStream(resp.stream as ReadableStreamDefaultReader<Uint8Array>);
+    }
+    setIsLoading(false);
+  };
 
   return { messages, isLoading, handlePost, chatRef };
 };

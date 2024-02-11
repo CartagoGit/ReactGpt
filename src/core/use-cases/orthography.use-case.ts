@@ -27,6 +27,6 @@ export const orthographyUseCase = async (
       ...data,
     };
   } catch (error) {
-    return manageError({ error: error, message: errorMessage });
+    return manageError({ error, message: errorMessage });
   }
 };

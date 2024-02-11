@@ -1,15 +1,10 @@
-import { useState } from "react";
 import {
     GptMessage,
     UserMessage,
     TypingLoader,
     TextMessageBox,
 } from "../../components/index.components";
-import {
-    useError,
-    useReadStream,
-    useScrollToBottom,
-} from "../../../shared/hooks/index.hooks";
+import { useChat } from "../../../shared/hooks/index.hooks";
 import { proConStreamUseCase } from "../../../core/use-cases/index.use-cases";
 import { IMessage } from "../../../shared/interfaces/index.interfaces";
 
@@ -19,31 +14,34 @@ const initMessage: IMessage = {
 };
 
 export const ProConStreamPage = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [messages, setMessages] = useState<IMessage[]>([initMessage]);
-    const readStream = useReadStream(setMessages);
-    const setError = useError(setMessages);
-    const chatRef = useScrollToBottom(messages);
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [messages, setMessages] = useState<IMessage[]>([initMessage]);
+    // const readStream = useReadStream(setMessages);
+    // const setError = useError(setMessages);
+    // const chatRef = useScrollToBottom(messages);
 
-    const handlePost = async (text: string) => {
-        if (isLoading) return;
-        setIsLoading(true);
-        setMessages((prev) => [...prev, { text, isGpt: false }]);
-        const resp = await proConStreamUseCase(text);
-        setIsLoading(false);
-        setMessages((prev) => [...prev, { text: "", isGpt: true }]);
+    // const handlePost = async (text: string) => {
+    //     if (isLoading) return;
+    //     setIsLoading(true);
+    //     setMessages((prev) => [...prev, { text, isGpt: false }]);
+    //     const resp = await proConStreamUseCase(text);
+    //     setIsLoading(false);
+    //     setMessages((prev) => [...prev, { text: "", isGpt: true }]);
 
-        if (!resp.ok) return setError(resp.message);
-        
-        await readStream(resp.stream);
-    };
+    //     if (!resp.ok) return setError(resp.message);
+
+    //     await readStream(resp.stream);
+    // };
+    const { chatRef, messages, isLoading, handlePost } = useChat({
+        initMessage,
+        request: proConStreamUseCase,
+    });
 
     return (
         <div className="chat-container">
             <div className="chat-messages" ref={chatRef}>
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
-
                     {messages.map((message, index) => {
                         const { isGpt, text } = message;
                         if (isGpt) {
