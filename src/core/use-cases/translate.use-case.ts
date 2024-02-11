@@ -20,14 +20,14 @@ export const translateUseCase = async (
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt, lang: lang?.label }),
     });
-    if (!resp.ok) throw new Error(errorMessage);
+    if (!resp.ok) throw resp;
     const { data }: ITranslateResponse = await resp.json();
     return {
       ok: true,
       gptMessage: data.content,
       ...data,
     };
-  } catch (error) {
-    return manageError({ error, message: errorMessage });
+} catch (error) {
+    return manageError({ error: error as Response, message: errorMessage });
   }
 };

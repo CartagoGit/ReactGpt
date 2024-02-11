@@ -22,12 +22,12 @@ export const proConStreamUseCase = async (
         signal: abortSignal,
       }
     );
-    if (!resp.ok) throw new Error(errorMessage);
+    if (!resp.ok) throw resp;
     const reader = resp.body?.getReader();
     if (!reader)
       throw new Error(`${errorMessage}. Problema al generar el lector`);
     return { ok: true, stream: reader };
   } catch (error) {
-    return manageError({ error, message: errorMessage });
+    return manageError({ error: error as Response, message: errorMessage });
   }
 };

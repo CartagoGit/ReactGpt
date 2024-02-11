@@ -1,16 +1,20 @@
 import { IErrorResponse } from "../../shared/interfaces/index.interfaces";
 
-export const manageError = (data: { message: string; error: any }) => {
+export const manageError = async (data: {
+  message: string;
+  error: Response;
+}) => {
   const { message, error } = data;
-  const kindError = (error?.kind as string) ?? "unknown";
+  const resp = await error.json();
+  const kindError = (resp?.kind as string) ?? "unknown";
   const specialErrorsMessage = {
     JsonParseError:
-      "Mensaje demasiado largo para ser procesado. Intente con un texto más corto.",
+      "Mensaje demasiado corto o demasiado largo para ser procesado. Reintente cambiando el texto.",
   };
   const specialMessage: string | undefined = (specialErrorsMessage as any)[
     kindError
   ];
-  console.log(error, specialMessage);
+
   const response = {
     ok: false,
     message: specialMessage ?? message,

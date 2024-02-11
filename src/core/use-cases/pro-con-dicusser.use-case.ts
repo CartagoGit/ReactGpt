@@ -20,7 +20,7 @@ export const proConDicusserUseCase = async (
       }
     );
 
-    if (!resp.ok) throw new Error(errorMessage);
+    if (!resp.ok) throw resp;
     const { data }: IProConDicusserResponse = await resp.json();
     return {
       ok: true,
@@ -28,6 +28,6 @@ export const proConDicusserUseCase = async (
       ...data,
     };
   } catch (error) {
-    return manageError({ error, message: errorMessage });
+    return manageError({ error: error as Response, message: errorMessage });
   }
 };

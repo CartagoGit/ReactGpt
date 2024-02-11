@@ -19,7 +19,7 @@ export const orthographyUseCase = async (
         body: JSON.stringify({ prompt }),
       }
     );
-    if (!resp.ok) throw new Error(errorMessage);
+    if (!resp.ok) throw resp;
     const { data }: IOrthographyResponse = await resp.json();
     return {
       ok: true,
@@ -27,6 +27,6 @@ export const orthographyUseCase = async (
       ...data,
     };
   } catch (error) {
-    return manageError({ error, message: errorMessage });
+    return manageError({ error: error as Response, message: errorMessage });
   }
 };
