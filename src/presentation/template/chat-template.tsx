@@ -68,6 +68,7 @@ export const ChatTemplate = () => {
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a corregir"
                 enableCorrections={false}
+                isLoading={isLoading}
             />
         </div>
     );
