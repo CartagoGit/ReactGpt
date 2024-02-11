@@ -14,54 +14,74 @@ export const useChat = <T>(data: {
   const setError = useError(setMessages);
   const chatRef = useScrollToBottom(messages);
 
-  const handlePost = useCallback(async (text: string) => {
-    if (isLoading) return;
-    setIsLoading(true);
-    setMessages((prev) => [...prev, { text, isGpt: false }]);
-    const resp = await request(text, {
-      abortSignal: abortController.current.signal,
-    });
-    if (!resp.ok) {
-      setIsLoading(false);
-      return setError(resp.message);
-    }
-    if ("gptMessage" in resp) {
-      const { gptMessage } = resp as { gptMessage: string };
-      setMessages((prev) => [
-        ...prev,
-        { text: gptMessage as string, isGpt: true, info: resp },
-      ]);
-    } else if ("stream" in resp) {
-      const { stream } = resp as { stream: ReadableStreamDefaultReader };
+  const handlePost = useCallback(
+    async (text: string) => {
+      if (isLoading) return;
+      setMessages((prev) => [...prev, { text, isGpt: false }]);
+      setIsLoading(true);
       try {
-        await readStream(stream);
+        const resp = await request(text, {
+          abortSignal: abortController.current.signal,
+        });
+        if (!resp.ok) return setError(resp);
+
+        if ("gptMessage" in resp) {
+          const { gptMessage } = resp as { gptMessage: string };
+          setMessages((prev) => [
+            ...prev,
+            { text: gptMessage as string, isGpt: true, info: resp },
+          ]);
+        } else if ("stream" in resp) {
+          const { stream } = resp as { stream: ReadableStreamDefaultReader };
+          await readStream(stream);
+        }
       } catch (error) {
         console.log(error);
-        // setError("Ocurrió un error leyendo la respuesta del servidor.");
+        const errorMessage =
+          "Ocurrió un error leyendo la respuesta del servidor.";
+        setError({ message: errorMessage, error, ok: false });
+      } finally {
+        setIsLoading(false);
       }
-    }
-    setIsLoading(false);
-  }, []);
+    },
+    [messages]
+  );
 
-  const handleAbortStream = useCallback(() => {
-    console.log("Abortando stream", isLoading);
-    if (!isLoading) return;
-    console.log("Abortando stream - isLoading");
-    abortController.current.abort();
-    abortController.current = new AbortController();
-    setMessages(([...prev]) => {
-      // prev[prev.length - 1].text = prev[prev.length - 1].text + " - ERROR -";
-      prev[prev.length - 1].text = " - ERROR -";
+  const handleAbortStream =
+    // useCallback(() => {
+    () => {
+      console.log("Abortando stream", isLoading, messages[messages.length - 1]);
+      if (!isLoading) return;
+      console.log("Abortando stream - isLoading");
+      abortController.current.abort("Clicked in abort button.");
+      // abortController.current.abort();
+      abortController.current = new AbortController();
       const newMessage = {
         text: "Se ha cancelado la petición",
         isGpt: true,
         isError: true,
       };
-      console.warn(newMessage);
-      return [...prev, newMessage];
-    });
-    setIsLoading(false);
-  }, []);
+      // throw new Error("Se ha cancelado la petición");
+      // setError("Se ha cancelado la petición");
+      // setMessages(([...prev]) => {
+      //   if (!prev[prev.length - 1].isGpt) return [...prev, newMessage];
+      //   const errorText = " - ERROR -";
+      //   console.log("errror", errorText);
+      //   // if (!prev[prev.length - 1].isGpt) return prev;
+      //   prev[prev.length - 1].text += errorText;
+      //   // prev[prev.length - 1].text = " - ERROR -";
+      //   console.warn(newMessage);
+      //   return [...prev, newMessage];
+      // });
+      // setIsLoading(false);
+    };
+  // }, [isLoading]);
 
-  return { messages, isLoading, handlePost, chatRef, handleAbortStream };
+  return {
+    messages,
+    isLoading,
+    handlePost,
+    chatRef,
+    handleAbortStream,
+  };
 };

@@ -14,10 +14,11 @@ const initMessage: IMessage = {
 };
 
 export const ProConStreamPage = () => {
-    const { chatRef, messages, isLoading, handlePost, handleAbortStream } = useChat({
-        initMessage,
-        request: proConStreamUseCase,
-    });
+    const { chatRef, messages, isLoading, handlePost, handleAbortStream } =
+        useChat({
+            initMessage,
+            request: proConStreamUseCase,
+        });
 
     return (
         <div className="chat-container">

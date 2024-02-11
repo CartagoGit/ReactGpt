@@ -8,6 +8,6 @@ export const manageError = (data: { message: string; error: any }) => {
     message,
     error,
   } as IErrorResponse;
-  console.error(response);
+  console.error('manageError:',response);
   return response;
 };
