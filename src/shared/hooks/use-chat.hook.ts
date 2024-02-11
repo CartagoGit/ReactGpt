@@ -1,10 +1,17 @@
 import { useError, useReadStream, useScrollToBottom } from "./index.hooks";
-import { IFetch, IMessage } from "../interfaces/index.interfaces";
+import {
+  IFetch,
+  IMessage,
+  ISelectOption,
+} from "../interfaces/index.interfaces";
 import { useCallback, useRef, useState } from "react";
 
 export const useChat = <T>(data: {
   initMessage: IMessage;
-  request: (text: string, options?: { abortSignal?: AbortSignal }) => IFetch<T>;
+  request: (
+    text: string,
+    options?: { abortSignal?: AbortSignal; lang?: ISelectOption }
+  ) => IFetch<T>;
 }) => {
   const { initMessage, request } = data;
   const [isLoading, setIsLoading] = useState(false);

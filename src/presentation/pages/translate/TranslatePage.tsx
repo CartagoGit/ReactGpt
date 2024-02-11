@@ -4,11 +4,10 @@ import {
     TypingLoader,
     TextMessageBoxSelect,
 } from "../../components/index.components";
-import { proConDicusserUseCase } from "../../../core/use-cases/index.use-cases";
+import { translateUseCase } from "../../../core/use-cases/index.use-cases";
 import { IMessage } from "../../../shared/interfaces/index.interfaces";
 import { useChat } from "../../../shared/hooks/index.hooks";
 import { langsOptions } from "../../../core/constants/index.constants";
-
 
 const initMessage: IMessage = {
     text: "Hola, escribe un texto que desees que traduzca.",
@@ -18,7 +17,7 @@ const initMessage: IMessage = {
 export const TranslatePage = () => {
     const { chatRef, handlePost, isLoading, messages } = useChat({
         initMessage,
-        request: proConDicusserUseCase,
+        request: translateUseCase,
     });
 
     return (
