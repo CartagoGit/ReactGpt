@@ -44,6 +44,7 @@ export const ProConDicusserPage = () => {
                 onSendMessage={handlePost}
                 placeholder="Escribe pros y contras para compararlos."
                 enableCorrections
+                isLoading={isLoading}
             />
         </div>
     );

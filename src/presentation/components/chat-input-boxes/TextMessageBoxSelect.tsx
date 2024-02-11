@@ -1,23 +1,12 @@
 import { FormEvent, useState } from "react";
-
-interface IProps {
-    onSendMessage: (props: { message: string; selectedOption: string }) => void;
-    options: IOption[];
-    placeholder?: string;
-    enableCorrections?: boolean;
-}
-
-interface IOption {
-    id: string;
-    text: string;
-}
+import { ITextMessageBoxSelectProps } from "../../../shared/interfaces/chat-input-boxes.interface";
 
 export const TextMessageBoxSelect = ({
     onSendMessage,
     placeholder,
     options,
     enableCorrections = false,
-}: IProps) => {
+}: ITextMessageBoxSelectProps) => {
     const [message, setMessage] = useState("");
     const [selectedOption, setSelectedOption] = useState<string>();
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
@@ -30,7 +19,7 @@ export const TextMessageBoxSelect = ({
     return (
         <form
             onSubmit={handleSendMessage}
-            className="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4"
+            className="flex flex-row items-center w-full h-16 px-4 bg-white rounded-xl"
         >
             <div className="flex-grow">
                 <div className="flex">
@@ -38,7 +27,7 @@ export const TextMessageBoxSelect = ({
                         type="text"
                         autoFocus
                         name="message"
-                        className="w-full border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                        className="w-full h-10 pl-4 text-gray-800 border rounded-xl focus:outline-none focus:border-indigo-300"
                         placeholder={placeholder}
                         autoCorrect={enableCorrections ? "on" : "off"}
                         autoComplete={enableCorrections ? "on" : "off"}
@@ -48,13 +37,13 @@ export const TextMessageBoxSelect = ({
                     />
                     <select
                         name="select"
-                        className="w-2/5 ml-5 border rounded-xl text-gray-800 focus:outline-none focus:border-indigo-300 pl-4 h-10"
+                        className="w-2/5 h-10 pl-4 ml-5 text-gray-800 border rounded-xl focus:outline-none focus:border-indigo-300"
                         onChange={(event) =>
                             setSelectedOption(event.target.value)
                         }
                     >
                         <option
-                            className="bg-blue-600 text-white"
+                            className="text-white bg-blue-600"
                             value={undefined}
                         >
                             Seleccionar

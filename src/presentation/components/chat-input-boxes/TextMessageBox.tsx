@@ -1,12 +1,5 @@
 import { FormEvent, useState } from "react";
-
-interface IProps {
-    onSendMessage: (message: string) => void;
-    isLoading: boolean;
-    placeholder?: string;
-    enableCorrections?: boolean;
-    onAbortStream?: () => void;
-}
+import { ITextMessageBoxProps } from "../../../shared/interfaces/index.interfaces";
 
 export const TextMessageBox = ({
     onSendMessage,
@@ -14,7 +7,7 @@ export const TextMessageBox = ({
     enableCorrections = false,
     onAbortStream = undefined,
     isLoading,
-}: IProps) => {
+}: ITextMessageBoxProps) => {
     const [message, setMessage] = useState("");
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
