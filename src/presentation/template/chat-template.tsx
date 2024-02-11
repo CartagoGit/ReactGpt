@@ -17,8 +17,9 @@ export const ChatTemplate = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
 
-    const handlePost = async (text: string) => {
+    const handlePost = async (props: { text: string }) => {
         if (isLoading) return;
+        const { text } = props;
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         // TODO UseCase

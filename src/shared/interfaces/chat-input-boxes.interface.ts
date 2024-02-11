@@ -1,10 +1,12 @@
+import { langs } from "../../core/constants/langs.constant";
+
 export interface ISelectOption {
   id: number;
-  text: string;
+  label: string;
 }
 
 export interface ITextMessageBoxProps {
-  onSendMessage: (message: string) => void;
+  onSendMessage: (props: { text: string }) => void;
   isLoading: boolean;
   placeholder?: string;
   enableCorrections?: boolean;
@@ -12,8 +14,11 @@ export interface ITextMessageBoxProps {
 }
 
 export type ITextMessageBoxSelectProps = ITextMessageBoxProps & {
-  onSendMessage: (props: { message: string; selectedOption: string }) => void;
-  options: ISelectOption[];
+  onSendMessage: (props: {
+    text: string;
+    selectedOption: ISelectOption;
+  }) => void;
+  options: Record<(typeof langs)[number], ISelectOption>;
 };
 
 export type ITextMessageBoxFileProps = ITextMessageBoxProps & {

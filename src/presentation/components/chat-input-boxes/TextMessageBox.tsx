@@ -12,7 +12,7 @@ export const TextMessageBox = ({
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (message.trim().length <= 0) return;
-        onSendMessage(message);
+        onSendMessage({ text: message });
         setMessage("");
     };
     return (

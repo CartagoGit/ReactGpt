@@ -1,3 +1,5 @@
+import { ISelectOption } from "../../shared/interfaces/index.interfaces";
+
 export const langs = [
   "Abjasio",
   "Acehnés",
@@ -185,3 +187,13 @@ export const langs = [
   "Zhuang",
   "Zulú",
 ] as const;
+
+let langsConverter: Record<typeof langs[number], ISelectOption> = {} as any;
+
+export const langsOptionsList: ISelectOption[] = langs.map((lang, index) => {
+  const option = { label: lang, id: index };
+  langsConverter[lang] = option;
+  return option;
+});
+
+export const langsOptions = langsConverter;

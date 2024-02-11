@@ -14,35 +14,40 @@ export const useChat = <T>(data: {
   const setError = useError(setMessages);
   const chatRef = useScrollToBottom(messages);
 
-  const handlePost = useCallback(async (text: string) => {
-    if (isLoading) return;
-    setMessages((prev) => [...prev, { text, isGpt: false }]);
-    setIsLoading(true);
-    try {
-      const resp = await request(text, {
-        abortSignal: abortController.current.signal,
-      });
-      if (!resp.ok) return setError(resp);
+  const handlePost = useCallback(
+    async (props: { text: string; selectedOptions?: string }) => {
+      if (isLoading) return;
+      const { text } = props;
+      setMessages((prev) => [...prev, { text, isGpt: false }]);
+      setIsLoading(true);
+      try {
+        const resp = await request(text, {
+          abortSignal: abortController.current.signal,
+        });
+        if (!resp.ok) return setError(resp);
 
-      if ("gptMessage" in resp) {
-        const { gptMessage } = resp as { gptMessage: string };
-        setMessages((prev) => [
-          ...prev,
-          { text: gptMessage as string, isGpt: true, info: resp },
-        ]);
-      } else if ("stream" in resp) {
-        const { stream } = resp as { stream: ReadableStreamDefaultReader };
-        await readStream(stream);
+        if ("gptMessage" in resp) {
+          const { gptMessage } = resp as { gptMessage: string };
+          setMessages((prev) => [
+            ...prev,
+            { text: gptMessage as string, isGpt: true, info: resp },
+          ]);
+        } else if ("stream" in resp) {
+          const { stream } = resp as { stream: ReadableStreamDefaultReader };
+          await readStream(stream);
+        }
+      } catch (error: any) {
+        let errorMessage =
+          "Ocurrió un error leyendo la respuesta del servidor.";
+        if (error?.name === "AbortError")
+          errorMessage = "Se ha cancelado la petición.";
+        setError({ message: errorMessage, error, ok: false });
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error: any) {
-      let errorMessage = "Ocurrió un error leyendo la respuesta del servidor.";
-      if (error?.name === "AbortError")
-        errorMessage = "Se ha cancelado la petición.";
-      setError({ message: errorMessage, error, ok: false });
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+    },
+    []
+  );
 
   const handleAbortStream = useCallback(() => {
     if (!isLoading) return;

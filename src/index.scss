@@ -9,6 +9,11 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+* {
+  @apply scrollbar scrollbar-w-1 scrollbar-thumb-indigo-500  scrollbar-track-neutral-900 scrollbar-thumb-rounded-xl scrollbar-track-rounded-xl scrollbar-corner-indigo-500 scrollbar-corner-rounded-xl;
+  scrollbar-gutter: stable both-edges;
+}
+
 h1 {
   @apply text-2xl font-bold  text-white;
 }
@@ -50,14 +55,21 @@ em {
 }
 
 .chat-messages {
-  @apply flex flex-col h-full overflow-x-auto mb-4 overflow-auto scrollbar scrollbar-w-1 scrollbar-thumb-indigo-500  scrollbar-track-neutral-900 scrollbar-thumb-rounded-xl scrollbar-track-rounded-xl scrollbar-corner-indigo-500 scrollbar-corner-rounded-xl;
-  scrollbar-gutter: stable both-edges;
+  @apply flex flex-col h-full overflow-x-auto mb-4 overflow-auto;
 }
 
 /* Animations */
 
 .fade-in {
   animation: fadeIn 0.3s;
+}
+
+select {
+  @apply w-2/5 h-10 pl-4 ml-5 text-white border rounded-xl focus:outline-none focus:border-indigo-300 bg-neutral-600 scrollbar-thumb-blue-600 scrollbar-corner-blue-600;
+}
+
+option {
+  @apply text-white bg-neutral-600  checked:bg-blue-700;
 }
 
 @keyframes fadeIn {
