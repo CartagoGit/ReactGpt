@@ -12,31 +12,30 @@ export const TextMessageBoxSelect = ({
     isLoading,
 }: ITextMessageBoxSelectProps) => {
     const [message, setMessage] = useState("");
-    const [selectedOption, setSelectedOption] = useState<ISelectOption>(
-        options.Español
-    );
-    console.log("options", options, options.Español, selectedOption);
-    const handleSendMessage = useCallback(
-        (event: FormEvent<HTMLFormElement>) => {
-            event.preventDefault();
-            if (message.trim().length <= 0 || !selectedOption) return;
+    const [selectedOption, setSelectedOption] = useState<
+        ISelectOption | undefined
+    >(options.Español);
+    const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (message.trim().length <= 0 || !selectedOption) return;
+        console.log("213123");
+        onSendMessage({ text: message, selectedOption });
+        setMessage("");
+    };
 
-            onSendMessage({ text: message, selectedOption });
-            setMessage("");
+    const handleOnChangeSelect = useCallback(
+        (event: React.ChangeEvent<HTMLSelectElement>) => {
+            const id = Number(event.target.value);
+            if (isNaN(id)) {
+                return setSelectedOption(undefined);
+            }
+            setSelectedOption({
+                id,
+                label: event.target.options[event.target.selectedIndex].text,
+            });
         },
         []
     );
-
-    const handleOnChangeSelect = (
-        event: React.ChangeEvent<HTMLSelectElement>
-    ) => {
-        const id = Number(event.target.value);
-        setSelectedOption({
-            id,
-            label: event.target.options[event.target.selectedIndex].text,
-            // label: options[id],
-        });
-    };
     return (
         <form
             onSubmit={handleSendMessage}
@@ -78,7 +77,11 @@ export const TextMessageBoxSelect = ({
             <div className="ml-4">
                 <button
                     className="btn-primary"
-                    disabled={isLoading || !selectedOption}
+                    disabled={
+                        isLoading ||
+                        !selectedOption ||
+                        message.trim().length <= 0
+                    }
                 >
                     <span className="mr-2">Enviar</span>
                     <i className="fa-regular fa-paper-plane"></i>

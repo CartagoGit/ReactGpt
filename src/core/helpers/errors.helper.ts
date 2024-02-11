@@ -10,6 +10,7 @@ export const manageError = (data: { message: string; error: any }) => {
   const specialMessage: string | undefined = (specialErrorsMessage as any)[
     kindError
   ];
+  console.log(error, specialMessage);
   const response = {
     ok: false,
     message: specialMessage ?? message,

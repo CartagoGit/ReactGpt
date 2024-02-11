@@ -5,8 +5,13 @@ export interface ISelectOption {
   label: string;
 }
 
+export interface ISendMessageProps {
+  text: string;
+  selectedOption?: ISelectOption;
+}
+
 export interface ITextMessageBoxProps {
-  onSendMessage: (props: { text: string }) => void;
+  onSendMessage: (props: ISendMessageProps) => void;
   isLoading: boolean;
   placeholder?: string;
   enableCorrections?: boolean;
@@ -14,10 +19,7 @@ export interface ITextMessageBoxProps {
 }
 
 export type ITextMessageBoxSelectProps = ITextMessageBoxProps & {
-  onSendMessage: (props: {
-    text: string;
-    selectedOption: ISelectOption;
-  }) => void;
+  onSendMessage: (props: ISendMessageProps) => void;
   options: Record<(typeof langs)[number], ISelectOption>;
 };
 

@@ -6,6 +6,7 @@ export const TextMessageBoxFile = ({
     placeholder,
     enableCorrections = false,
     accept = "image/*",
+    isLoading,
 }: ITextMessageBoxFileProps) => {
     const [message, setMessage] = useState("");
     const [selectedFile, setSelectedFile] = useState<File | null | undefined>();
@@ -58,7 +59,12 @@ export const TextMessageBoxFile = ({
                 </div>
             </div>
             <div className="ml-4">
-                <button className="btn-primary" disabled={!selectedFile}>
+                <button
+                    className="btn-primary"
+                    disabled={
+                        !selectedFile || isLoading || message.trim().length <= 0
+                    }
+                >
                     <span className="mr-2">
                         {!selectedFile
                             ? "Enviar"

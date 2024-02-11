@@ -1,4 +1,3 @@
-import { json } from "react-router-dom";
 import { ISelectOption } from "../../shared/interfaces/chat-input-boxes.interface";
 import {
   IFetch,
@@ -19,7 +18,7 @@ export const translateUseCase = async (
     const resp = await fetch(`${CONSTANTS.API_GPT_URL}${endpoints.transalte}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt, lang }),
+      body: JSON.stringify({ prompt, lang: lang?.label }),
     });
     if (!resp.ok) throw new Error(errorMessage);
     const { data }: ITranslateResponse = await resp.json();

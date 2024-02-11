@@ -53,7 +53,7 @@ export const TextMessageBox = ({
             <div className="ml-4">
                 <button
                     className="btn-primary"
-                    disabled={isLoading}
+                    disabled={isLoading || message.trim().length <= 0}
                     type="submit"
                 >
                     <span className="mr-2">Enviar</span>
