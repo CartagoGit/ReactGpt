@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
     GptMessageOrthography,
@@ -6,6 +5,7 @@ import {
     TypingLoader,
 } from "../../components/index.components";
 import { orthographyUseCase } from "../../../core/use-cases/index.use-cases";
+import { useChat } from "../../../shared/hooks/index.hooks";
 import { IMesssageOrthography } from "../../../shared/interfaces/message.interface";
 
 const initMessage: IMesssageOrthography = {
@@ -14,34 +14,14 @@ const initMessage: IMesssageOrthography = {
 };
 
 export const OrthographyPage = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [messages, setMessages] = useState<IMesssageOrthography[]>([
+    const { chatRef, handlePost, isLoading, messages } = useChat({
         initMessage,
-    ]);
-
-    const handlePost = async (text: string) => {
-        if (isLoading) return;
-        setIsLoading(true);
-        setMessages((prev) => [...prev, { text, isGpt: false }]);
-        const resp = await orthographyUseCase(text);
-        setIsLoading(false);
-        if (!resp.ok) {
-            return setMessages((prev) => [
-                ...prev,
-                { text: resp.message, isGpt: true, isError: true },
-            ]);
-        }
-
-        const { result } = resp;
-        setMessages((prev) => [
-            ...prev,
-            { text: result, isGpt: true, info: resp },
-        ]);
-    };
+        request: orthographyUseCase,
+    });
 
     return (
         <div className="chat-container">
-            <div className="chat-messages">
+            <div className="chat-messages" ref={chatRef}>
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
                     {messages.map((message, index) => {

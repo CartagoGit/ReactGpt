@@ -23,7 +23,6 @@ export const ProConStreamPage = () => {
         <div className="chat-container">
             <div className="chat-messages" ref={chatRef}>
                 <div className="grid grid-cols-12 gap-y-2">
-                    {/* Bienvenida */}
                     {messages.map((message, index) => {
                         const { isGpt, text } = message;
                         if (isGpt) {

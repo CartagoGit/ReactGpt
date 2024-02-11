@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
     GptMessage,
     UserMessage,
@@ -6,11 +5,8 @@ import {
     TextMessageBox,
 } from "../../components/index.components";
 import { proConDicusserUseCase } from "../../../core/use-cases/index.use-cases";
-
-interface IMessage {
-    text: string;
-    isGpt: boolean;
-}
+import { IMessage } from "../../../shared/interfaces/index.interfaces";
+import { useChat } from "../../../shared/hooks/index.hooks";
 
 const initMessage: IMessage = {
     text: "Hola, escribe  lo que deseas que compare, y te ayudaré a encontrar los pros y contras.",
@@ -18,30 +14,14 @@ const initMessage: IMessage = {
 };
 
 export const ProConDicusserPage = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [messages, setMessages] = useState<IMessage[]>([initMessage]);
-
-    const handlePost = async (text: string) => {
-        if (isLoading) return;
-        setIsLoading(true);
-        setMessages((prev) => [...prev, { text, isGpt: false }]);
-        const resp = await proConDicusserUseCase(text);
-
-        setIsLoading(false);
-        if (!resp.ok) {
-            return setMessages((prev) => [
-                ...prev,
-                { text: resp.message, isGpt: true, isError: true },
-            ]);
-        }
-
-        const { content } = resp;
-        setMessages((prev) => [...prev, { text: content, isGpt: true }]);
-    };
+    const { chatRef, handlePost, isLoading, messages } = useChat({
+        initMessage,
+        request: proConDicusserUseCase,
+    });
 
     return (
         <div className="chat-container">
-            <div className="chat-messages">
+            <div className="chat-messages" ref={chatRef}>
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
 

@@ -1,6 +1,6 @@
 import { IOrthographyResponse } from "./responses.interface";
 
-export interface IMessage<T = undefined> {
+export interface IMessage<T = any> {
   text: string;
   isGpt: boolean;
   isError?: boolean;

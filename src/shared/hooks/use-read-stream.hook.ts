@@ -25,14 +25,8 @@ export const useReadStream = (
   // Function to read the stream and update the messages
   const readStream = useCallback(
     async (stream: ReadableStreamDefaultReader<Uint8Array>) => {
-      console.log("readStream");
-      setMessages((prev) => [
-        ...prev,
-        { text: "me cago en la leche", isGpt: true },
-      ]);
-
+      setMessages((prev) => [...prev, { text: "", isGpt: true }]);
       for await (const gptMessage of generator(stream)) {
-        console.log("gptMessage", gptMessage);
         setMessages(([...prev]) => {
           prev.at(-1)!.text = gptMessage;
           return prev;

@@ -8,7 +8,7 @@ export const useChat = <T>(data: {
 }) => {
   const { initMessage, request } = data;
   const [isLoading, setIsLoading] = useState(false);
-  const [messages, setMessages] = useState<IMessage[]>([initMessage]);
+  const [messages, setMessages] = useState([initMessage]);
   const readStream = useReadStream(setMessages);
   const setError = useError(setMessages);
   const chatRef = useScrollToBottom(messages);
@@ -19,13 +19,14 @@ export const useChat = <T>(data: {
     setMessages((prev) => [...prev, { text, isGpt: false }]);
     const resp = await request(text);
     if (!resp.ok) {
-      setMessages((prev) => [...prev, { text: "", isGpt: true }]);
       setIsLoading(false);
       return setError(resp.message);
     }
     if ("gptMessage" in resp) {
-      //   const gptMessage = resp.gptMessage as string;
-      console.log("gptMessage", resp.gptMessage);
+      setMessages((prev) => [
+        ...prev,
+        { text: resp.gptMessage as string, isGpt: true, info: resp },
+      ]);
     } else if ("stream" in resp) {
       await readStream(resp.stream as ReadableStreamDefaultReader<Uint8Array>);
     }
