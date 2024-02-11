@@ -6,14 +6,14 @@ export type IOkResponse<T> = {
   [K in keyof T]: K extends "data" ? any : never;
 }
   ? T["data"] & { gptMessage: string }
-  : T extends { stream: ReadableStreamDefaultReader }
+  : T extends { stream: ReadableStreamDefaultReader; kind: "stream" }
   ? T & { stream: ReadableStreamDefaultReader }
   : T);
 
 export interface IErrorResponse {
+  ok: false;
   message: string;
   error: any;
-  ok: false;
 }
 
 export type IFetch<T> = Promise<IErrorResponse | IOkResponse<T>>;

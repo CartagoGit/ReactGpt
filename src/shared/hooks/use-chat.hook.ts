@@ -23,12 +23,14 @@ export const useChat = <T>(data: {
       return setError(resp.message);
     }
     if ("gptMessage" in resp) {
+      const { gptMessage } = resp as { gptMessage: string };
       setMessages((prev) => [
         ...prev,
-        { text: resp.gptMessage as string, isGpt: true, info: resp },
+        { text: gptMessage as string, isGpt: true, info: resp },
       ]);
     } else if ("stream" in resp) {
-      await readStream(resp.stream as ReadableStreamDefaultReader<Uint8Array>);
+      const { stream } = resp as { stream: ReadableStreamDefaultReader };
+      await readStream(stream);
     }
     setIsLoading(false);
   }, []);
