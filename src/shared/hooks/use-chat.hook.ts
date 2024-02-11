@@ -20,7 +20,7 @@ export const useChat = <T>(data: {
     const resp = await useCase(text);
     if (!resp.ok) return setError(resp.message);
     setIsLoading(false);
-   
+
     setMessages((prev) => [...prev, { text: "", isGpt: true }]);
   }, []);
 
