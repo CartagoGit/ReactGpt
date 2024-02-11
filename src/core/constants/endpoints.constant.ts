@@ -6,4 +6,5 @@ export const endpoints = {
     dicusser: "/pro-con/dicusser",
     stream: "/pro-con/stream",
   },
+  transalte: "/translate",
 } as const;
