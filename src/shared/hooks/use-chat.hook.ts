@@ -1,9 +1,8 @@
-import { useState } from "react";
-
 import { useError, useReadStream, useScrollToBottom } from "./index.hooks";
 import { IFetch, IMessage } from "../interfaces/index.interfaces";
+import { useCallback, useState } from "react";
 
-export const useChat = <T extends object>(data: {
+export const useChat = <T>(data: {
   initMessage: IMessage;
   request: (text: string) => IFetch<T>;
 }) => {
@@ -14,7 +13,7 @@ export const useChat = <T extends object>(data: {
   const setError = useError(setMessages);
   const chatRef = useScrollToBottom(messages);
 
-  const handlePost = async (text: string) => {
+  const handlePost = useCallback(async (text: string) => {
     if (isLoading) return;
     setIsLoading(true);
     setMessages((prev) => [...prev, { text, isGpt: false }]);
@@ -26,11 +25,12 @@ export const useChat = <T extends object>(data: {
     }
     if ("gptMessage" in resp) {
       //   const gptMessage = resp.gptMessage as string;
+      console.log("gptMessage", resp.gptMessage);
     } else if ("stream" in resp) {
       await readStream(resp.stream as ReadableStreamDefaultReader<Uint8Array>);
     }
     setIsLoading(false);
-  };
+  }, []);
 
   return { messages, isLoading, handlePost, chatRef };
 };

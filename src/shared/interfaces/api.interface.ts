@@ -1,5 +1,5 @@
 //* If the reponse JUST has a data property, then return the data property, else return the whole response
-export type IOkResponse<T extends object> = {
+export type IOkResponse<T> = {
   ok: true;
 } & (T extends { data: any } & {
   // Check if the response has JUST a data property
@@ -16,4 +16,4 @@ export interface IErrorResponse {
   ok: false;
 }
 
-export type IFetch<T extends object> = Promise<IErrorResponse | IOkResponse<T>>;
+export type IFetch<T> = Promise<IErrorResponse | IOkResponse<T>>;
