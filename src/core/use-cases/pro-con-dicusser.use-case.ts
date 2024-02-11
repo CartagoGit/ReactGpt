@@ -12,7 +12,7 @@ export const proConDicusserUseCase = async (
   const errorMessage = "No se pudo realizar la comparación de pros y contras";
   try {
     const resp = await fetch(
-      `${CONSTANTS.API_GPT_URL}${endpoints.proCon.discuss}`,
+      `${CONSTANTS.API_GPT_URL}${endpoints.proCon.dicusser}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

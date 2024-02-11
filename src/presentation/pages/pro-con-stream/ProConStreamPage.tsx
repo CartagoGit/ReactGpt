@@ -14,7 +14,7 @@ const initMessage: IMessage = {
 };
 
 export const ProConStreamPage = () => {
-    const { chatRef, messages, isLoading, handlePost } = useChat({
+    const { chatRef, messages, isLoading, handlePost, handleAbortStream } = useChat({
         initMessage,
         request: proConStreamUseCase,
     });
@@ -40,6 +40,8 @@ export const ProConStreamPage = () => {
             </div>
             <TextMessageBox
                 onSendMessage={handlePost}
+                isLoading={isLoading}
+                onAbortStream={handleAbortStream}
                 placeholder="Escribe pros y contras para compararlos."
                 enableCorrections
             />

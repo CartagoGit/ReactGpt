@@ -10,7 +10,6 @@ export const useReadStream = (
     stream: ReadableStreamDefaultReader<Uint8Array>
   ) {
     const decoder = new TextDecoder();
-    console.log("generator");
     let result = "";
     while (true) {
       const { done, value } = await stream.read();
