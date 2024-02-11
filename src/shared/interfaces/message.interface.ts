@@ -5,6 +5,7 @@ export interface IMessage<T = any> {
   isGpt: boolean;
   isError?: boolean;
   info?: T;
+  errorMessage?: string;
 }
 
 export type IMesssageOrthography = IMessage<IOrthographyResponse["data"]>;

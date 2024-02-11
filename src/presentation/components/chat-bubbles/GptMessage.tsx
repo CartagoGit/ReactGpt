@@ -1,17 +1,24 @@
 import Markdown from "react-markdown";
 import { IMessage } from "../../../shared/interfaces/message.interface";
 
-export const GptMessage = ({ text, isError = false }: IMessage) => {
+export const GptMessage = ({
+    text,
+    isError = false,
+    errorMessage = undefined,
+}: IMessage) => {
     return (
         <div className="col-start-1 col-end-9 p-3 rounded-lg">
             <div className="flex flex-row items-start">
-                <div className="flex items-center justify-center h-10 w-10 rounded-full bg-green-600 flex-shrink-0">
+                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-green-600 rounded-full">
                     Gpt
                 </div>
-                <div className="relative ml-3 text-sm bg-black bg-opacity-25 py-2 px-4 shadow rounded-xl whitespace-pre-line">
+                <div className="relative px-4 py-2 ml-3 text-sm whitespace-pre-line bg-black bg-opacity-25 shadow rounded-xl">
                     <Markdown className={isError ? "text-red-700" : null}>
                         {text}
                     </Markdown>
+                    {errorMessage && (
+                        <div className="text-red-700">{errorMessage}</div>
+                    )}
                 </div>
             </div>
         </div>
