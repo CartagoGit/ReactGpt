@@ -5,7 +5,7 @@ export type IOkResponse<T> = {
 (T extends { data: any } & {
   [K in keyof T]: K extends "data" ? any : never;
 }
-  ? T["data"]
+  ? T["data"] 
   : T);
 
 export interface IErrorResponse {

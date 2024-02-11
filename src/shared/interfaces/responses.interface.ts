@@ -7,7 +7,6 @@ export interface IOrthographyResponse {
     message: string;
     errors: string[];
   };
-  // pepe: string;
 }
 
 export interface IProConDicusserResponse {
