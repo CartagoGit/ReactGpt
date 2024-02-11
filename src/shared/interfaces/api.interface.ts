@@ -6,7 +6,7 @@ export type IOkResponse<T> = {
   [K in keyof T]: K extends "data" ? any : never;
 }
   ? T["data"] & { gptMessage: string }
-  : T extends { stream: ReadableStreamDefaultReader; kind: "stream" }
+  : T extends { stream: ReadableStreamDefaultReader }
   ? T & { stream: ReadableStreamDefaultReader }
   : T);
 
