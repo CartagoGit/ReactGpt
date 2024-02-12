@@ -23,7 +23,7 @@ export const orthographyUseCase = async (
     const { data }: IOrthographyResponse = await resp.json();
     return {
       ok: true,
-      gptMessage: data.result,
+      gptMessage: data.content,
       ...data,
     };
   } catch (error) {

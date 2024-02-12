@@ -2,7 +2,7 @@
 
 export interface IOrthographyResponse {
   data: {
-    result: string;
+    content: string;
     accuracy: number;
     message: string;
     errors: string[];
