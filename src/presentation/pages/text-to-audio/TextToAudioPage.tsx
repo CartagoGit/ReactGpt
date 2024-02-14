@@ -16,7 +16,7 @@ import { useError } from "../../../shared/hooks/index.hooks";
 import type { ISelectOption } from "../../../shared/interfaces/index.interfaces";
 
 const initMessage: IMessage = {
-    text: "Hola, escribe un texto y te lo dire oralmente.",
+    text: "Hola, escribe un texto y te lo dire con una voz.",
     isGpt: true,
 };
 
@@ -25,13 +25,22 @@ export const TextToAudioPage = () => {
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
     const setError = useError(setMessages);
 
-    const handlePost = async<T extends string>(props: {
+    const handlePost = async (props: {
         text: string;
-        selectedOption: ISelectOption<T>;
-    }) => {
+        selectedOption?: ISelectOption;
+    }): Promise<void> => {
         if (isLoading) return;
         const { text, selectedOption } = props;
-        const voice = selectedOption.label;
+        if (!selectedOption) {
+            return setError({
+                ok: false,
+                message: "No se ha seleccionado una voz para el audio.",
+                error: new Error(
+                    "No se ha seleccionado una voz para el audio."
+                ),
+            });
+        }
+        const voice = selectedOption.label as (typeof voices)[number];
 
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
@@ -76,7 +85,7 @@ export const TextToAudioPage = () => {
                     )}
                 </div>
             </div>
-            <TextMessageBoxSelect<typeof voices[number]>
+            <TextMessageBoxSelect
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a convertir en audio."
                 enableCorrections={false}

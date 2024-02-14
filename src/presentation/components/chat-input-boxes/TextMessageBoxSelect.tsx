@@ -4,7 +4,7 @@ import {
     ITextMessageBoxSelectProps,
 } from "../../../shared/interfaces/chat-input-boxes.interface";
 
-export const TextMessageBoxSelect = <T extends string = string>({
+export const TextMessageBoxSelect = ({
     onSendMessage,
     placeholder,
     selectable,
@@ -12,11 +12,12 @@ export const TextMessageBoxSelect = <T extends string = string>({
     isLoading,
     fileToDownload,
     enableCorrections = false,
-}: ITextMessageBoxSelectProps<T>) => {
+}: ITextMessageBoxSelectProps) => {
     const [message, setMessage] = useState("");
     const [selectedOption, setSelectedOption] = useState<
-        ISelectOption<T> | undefined
+        ISelectOption | undefined
     >(selectableByDefault);
+
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (message.trim().length <= 0 || !selectedOption) return;
@@ -32,8 +33,7 @@ export const TextMessageBoxSelect = <T extends string = string>({
             }
             setSelectedOption({
                 id,
-                label: event.target.options[event.target.selectedIndex]
-                    .text as T,
+                label: event.target.options[event.target.selectedIndex].text,
             });
         },
         []
@@ -68,12 +68,7 @@ export const TextMessageBoxSelect = <T extends string = string>({
                         >
                             Seleccionar
                         </option>
-                        {(
-                            Object.values(selectable) as {
-                                id: number;
-                                label: T;
-                            }[]
-                        ).map(({ id, label }) => (
+                        {Object.values(selectable).map(({ id, label }) => (
                             <option key={id} value={id}>
                                 {label}
                             </option>

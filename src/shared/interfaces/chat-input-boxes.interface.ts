@@ -1,28 +1,27 @@
-export interface ISelectOption<T extends string = string> {
+export interface ISelectOption {
   id: number;
-  label: T;
+  label: string;
 }
 
-export interface ISendMessageProps<T extends string = string> {
+export interface ISendMessageProps {
   text: string;
-  selectedOption?: ISelectOption<T>;
+  selectedOption?: ISelectOption;
 }
 
-export interface ITextMessageBoxProps<T extends string = string> {
-  onSendMessage: (props: ISendMessageProps<T>) => void;
+export interface ITextMessageBoxProps {
+  onSendMessage: (props: ISendMessageProps) => void;
   isLoading: boolean;
   placeholder?: string;
   enableCorrections?: boolean;
   onAbortStream?: () => void;
 }
 
-export type ITextMessageBoxSelectProps<T extends string = string> =
-  ITextMessageBoxProps<T> & {
-    onSendMessage: (props: ISendMessageProps<T>) => void;
-    selectable: Record<T, ISelectOption<T>>;
-    selectableByDefault?: ISelectOption<T> | undefined;
-    fileToDownload?: any;
-  };
+export type ITextMessageBoxSelectProps = ITextMessageBoxProps & {
+  onSendMessage: (props: ISendMessageProps) => void;
+  selectable: Record<string, ISelectOption>;
+  selectableByDefault?: ISelectOption;
+  fileToDownload?: any;
+};
 
 export type ITextMessageBoxFileProps = ITextMessageBoxProps & {
   accept?: React.InputHTMLAttributes<HTMLInputElement>["accept"];
