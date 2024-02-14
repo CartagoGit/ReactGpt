@@ -46,19 +46,6 @@ export const TextToAudioPage = () => {
         } finally {
             setIsLoading(false);
         }
-        // TODO Añadir la respuesta con isGpt: true, e isError: true si es necesario
-        // if (!resp.ok) {
-        //     return setMessages((prev) => [
-        //         ...prev,
-        //         { text: resp.message, isGpt: true, isError: true },
-        //     ]);
-        // }
-
-        // const { result } = resp;
-        // setMessages((prev) => [
-        //     ...prev,
-        //     { text: result, isGpt: true, info: resp },
-        // ]);
     };
 
     return (
