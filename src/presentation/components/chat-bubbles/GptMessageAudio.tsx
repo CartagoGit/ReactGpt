@@ -22,14 +22,17 @@ export const GptMessageAudio = ({
                 <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-green-600 rounded-full">
                     Gpt
                 </div>
-                <div className="relative flex flex-col gap-2 px-4 py-2 ml-3 text-sm whitespace-pre-line bg-black bg-opacity-25 shadow rounded-xl">
+                <div className="relative flex flex-col gap-3 px-4 py-2 ml-3 text-sm whitespace-pre-line bg-black bg-opacity-25 shadow rounded-xl">
                     <div>{text}</div>
-                    {!!stream && (<div>
-                        <audio ref={audioRef} controls  />
-                        {/* <button onClick={togglePlay}>
+                    {!!stream && (
+                        <div className="flex items-center gap-4">
+                            <audio className="h-[40px]" ref={audioRef} controls />
+                            <i className="text-2xl text-pink-700 transition ease-out cursor-pointer transitio-colors fa-solid fa-download hover:text-pink-900"></i>
+                            {/* <button onClick={togglePlay}>
                             {isPlaying ? "Pause" : "Play"}
                         </button> */}
-                    </div>)}
+                        </div>
+                    )}
                     {errorMessage && (
                         <div className="text-red-700">{errorMessage}</div>
                     )}

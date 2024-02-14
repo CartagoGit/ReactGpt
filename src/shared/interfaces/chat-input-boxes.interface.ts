@@ -20,7 +20,6 @@ export type ITextMessageBoxSelectProps = ITextMessageBoxProps & {
   onSendMessage: (props: ISendMessageProps) => void;
   selectable: Record<string, ISelectOption>;
   selectableByDefault?: ISelectOption;
-  fileToDownload?: Uint8Array | null;
 };
 
 export type ITextMessageBoxFileProps = ITextMessageBoxProps & {

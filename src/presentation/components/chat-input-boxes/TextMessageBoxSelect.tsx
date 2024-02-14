@@ -10,7 +10,6 @@ export const TextMessageBoxSelect = ({
     selectable,
     selectableByDefault,
     isLoading,
-    fileToDownload,
     enableCorrections = false,
 }: ITextMessageBoxSelectProps) => {
     const [message, setMessage] = useState("");
@@ -89,16 +88,7 @@ export const TextMessageBoxSelect = ({
                     <i className="fa-regular fa-paper-plane"></i>
                 </button>
             </div>
-            {!!fileToDownload && (
-                <div className="ml-4">
-                    <button
-                        className="btn-secondary"
-                        disabled={isLoading || !fileToDownload}
-                    >
-                        <i className="fa-solid fa-download"></i>
-                    </button>
-                </div>
-            )}
+         
         </form>
     );
 };

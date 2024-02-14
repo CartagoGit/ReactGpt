@@ -102,7 +102,7 @@ export const TextToAudioPage = () => {
                 isLoading={isLoading}
                 selectable={voicesSelectables}
                 selectableByDefault={voicesSelectables.onyx}
-                fileToDownload={streamData}
+          
             />
         </div>
     );
