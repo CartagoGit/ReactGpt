@@ -12,7 +12,6 @@ export const useError = (setMessages: Dispatch<SetStateAction<IMessage[]>>) => {
     console.error("useError:", error);
     setMessages(([...prev]) => {
       const lastMessage = prev.at(-1)!;
-      // if (prev.at(-1)?.isGpt) prev[prev.length - 1].text += "\n<- Error ->";
       if (lastMessage.isGpt) {
         prev[prev.length - 1] = {
           ...lastMessage,
