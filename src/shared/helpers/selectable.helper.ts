@@ -1,7 +1,7 @@
 import type { ISelectOption } from "../interfaces/index.interfaces";
 
 export const arrayToSelectable = <T extends string>(
-  array: string[]
+  array: readonly T[]
 ): {
   objectSelectables: Record<T, ISelectOption>;
   listSelectables: ISelectOption[];

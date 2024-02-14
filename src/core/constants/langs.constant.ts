@@ -188,4 +188,7 @@ export const langs = [
   "Zulú",
 ] as const;
 
-export const langsOptions = arrayToSelectable(langs);
+export const {
+  listSelectables: langsListSelectables,
+  objectSelectables: langsSelectables,
+} = arrayToSelectable(langs);

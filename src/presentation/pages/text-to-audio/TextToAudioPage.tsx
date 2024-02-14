@@ -7,9 +7,10 @@ import {
 } from "../../components/index.components";
 
 import { IMessage } from "../../../shared/interfaces/message.interface";
+import { voicesSelectables } from "../../../core/constants/index.constants";
 
 const initMessage: IMessage = {
-    text: "Hola, puedes escribir en español, y te ayudo con las correcciones.",
+    text: "Hola, escribe un texto y te lo dire oralmente.",
     isGpt: true,
 };
 
@@ -67,10 +68,11 @@ export const TextToAudioPage = () => {
             </div>
             <TextMessageBoxSelect
                 onSendMessage={handlePost}
-                placeholder="Escribe el texto a corregir"
+                placeholder="Escribe el texto a convertir en audio."
                 enableCorrections={false}
                 isLoading={isLoading}
-				selectable={}
+                selectable={voicesSelectables}
+                selectableByDefault={voicesSelectables.onyx}
             />
         </div>
     );

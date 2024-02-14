@@ -7,7 +7,7 @@ import {
 import { translateUseCase } from "../../../core/use-cases/index.use-cases";
 import { IMessage } from "../../../shared/interfaces/index.interfaces";
 import { useChat } from "../../../shared/hooks/index.hooks";
-import { langsOptions } from "../../../core/constants/index.constants";
+import { langsSelectables } from "../../../core/constants/index.constants";
 
 const initMessage: IMessage = {
     text: "Hola, escribe un texto que desees que traduzca.",
@@ -46,8 +46,8 @@ export const TranslatePage = () => {
                 placeholder="Escribe un texto a traducir."
                 enableCorrections
                 isLoading={isLoading}
-                selectable={langsOptions}
-                selectableByDefault={langsOptions.Español}
+                selectable={langsSelectables}
+                selectableByDefault={langsSelectables.Español}
             />
         </div>
     );
