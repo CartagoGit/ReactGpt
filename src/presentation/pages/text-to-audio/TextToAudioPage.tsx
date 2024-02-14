@@ -7,7 +7,12 @@ import {
 } from "../../components/index.components";
 
 import { IMessage } from "../../../shared/interfaces/message.interface";
-import { voicesSelectables } from "../../../core/constants/index.constants";
+import {
+    voices,
+    voicesSelectables,
+} from "../../../core/constants/index.constants";
+import { textToAudioUseCase } from "../../../core/use-cases/text-to-audio.use-case";
+import { useError } from "../../../shared/hooks/index.hooks";
 
 const initMessage: IMessage = {
     text: "Hola, escribe un texto y te lo dire oralmente.",
@@ -17,15 +22,30 @@ const initMessage: IMessage = {
 export const TextToAudioPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
+    const setError = useError(setMessages);
 
-    const handlePost = async (props: { text: string }) => {
+    const handlePost = async (props: {
+        text: string;
+        voice: (typeof voices)[number];
+    }) => {
         if (isLoading) return;
-        const { text } = props;
+        const { text, voice } = props;
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
-        // TODO UseCase
-        // const resp = await useCase(text);
-        setIsLoading(false);
+        try {
+            const resp = await textToAudioUseCase(text, { voice });
+            if (!resp.ok) return setError(resp);
+            const { stream } = resp;
+            // TODO Añadir la respuesta con audio al que se pueda pulsar en el play y guardar el archivo para que se pueda descargar
+        } catch (error: any) {
+            let errorMessage =
+                "Ocurrió un error leyendo la respuesta del servidor.";
+            if (error?.name === "AbortError")
+                errorMessage = "Se ha cancelado la petición.";
+            setError({ message: errorMessage, error, ok: false });
+        } finally {
+            setIsLoading(false);
+        }
         // TODO Añadir la respuesta con isGpt: true, e isError: true si es necesario
         // if (!resp.ok) {
         //     return setMessages((prev) => [
