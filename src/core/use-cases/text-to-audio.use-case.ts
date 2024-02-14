@@ -1,24 +1,24 @@
+import type { voices } from "../constants/voices.constant";
 import type {
   IFetch,
-  IProConStreamResponse,
+  ITextToAudioStreamResponse,
 } from "../../shared/interfaces/index.interfaces";
 import { manageError } from "../../shared/helpers/index.helpers";
 import { CONSTANTS, endpoints } from "../constants/index.constants";
 
-export const proConStreamUseCase = async (
+export const textToAudioUseCase = async (
   prompt: string,
-  options?: { abortSignal?: AbortSignal }
-): IFetch<IProConStreamResponse> => {
-  const errorMessage = "No se pudo realizar la comparación de pros y contras";
+  options: { voice: (typeof voices)[number] }
+): IFetch<ITextToAudioStreamResponse> => {
+  const errorMessage = "No se pudo realizar la conversión de texto a audio";
   try {
-    const { abortSignal } = options || {};
+    const { voice } = options;
     const resp = await fetch(
-      `${CONSTANTS.API_GPT_URL}${endpoints.proCon.stream}`,
+      `${CONSTANTS.API_GPT_URL}${endpoints.textToAudio.stream}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
-        signal: abortSignal,
+        body: JSON.stringify({ prompt, voice }),
       }
     );
     if (!resp.ok) throw resp;
