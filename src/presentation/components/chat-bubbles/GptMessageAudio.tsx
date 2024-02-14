@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { IMessage } from "../../../shared/interfaces/message.interface";
 import { ITextToAudioResponse } from "../../../shared/interfaces/responses.interface";
 
