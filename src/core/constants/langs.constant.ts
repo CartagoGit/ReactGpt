@@ -1,4 +1,4 @@
-import { ISelectOption } from "../../shared/interfaces/index.interfaces";
+import { arrayToSelectable } from "../../shared/helpers/selectable.helper";
 
 export const langs = [
   "Abjasio",
@@ -188,12 +188,4 @@ export const langs = [
   "Zulú",
 ] as const;
 
-let langsConverter: Record<typeof langs[number], ISelectOption> = {} as any;
-
-export const langsOptionsList: ISelectOption[] = langs.map((lang, index) => {
-  const option = { label: lang, id: index };
-  langsConverter[lang] = option;
-  return option;
-});
-
-export const langsOptions = langsConverter;
+export const langsOptions = arrayToSelectable(langs);

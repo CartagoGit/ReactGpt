@@ -1,4 +1,4 @@
-import { IErrorResponse } from "../../shared/interfaces/index.interfaces";
+import { IErrorResponse } from "../interfaces/index.interfaces";
 
 export const manageError = async (data: {
   message: string;

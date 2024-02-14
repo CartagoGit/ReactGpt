@@ -7,14 +7,15 @@ import {
 export const TextMessageBoxSelect = ({
     onSendMessage,
     placeholder,
-    options,
-    enableCorrections = false,
+    selectable,
+    selectableByDefault,
     isLoading,
+    enableCorrections = false,
 }: ITextMessageBoxSelectProps) => {
     const [message, setMessage] = useState("");
     const [selectedOption, setSelectedOption] = useState<
         ISelectOption | undefined
-    >(options.Español);
+    >(selectableByDefault);
     const handleSendMessage = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (message.trim().length <= 0 || !selectedOption) return;
@@ -65,7 +66,7 @@ export const TextMessageBoxSelect = ({
                         >
                             Seleccionar
                         </option>
-                        {Object.values(options).map(({ id, label }) => (
+                        {Object.values(selectable).map(({ id, label }) => (
                             <option key={id} value={id}>
                                 {label}
                             </option>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
     GptMessageOrthography,
-    TextMessageBox,
+    TextMessageBoxSelect,
     TypingLoader,
 } from "../../components/index.components";
 
@@ -65,11 +65,12 @@ export const TextToAudioPage = () => {
                     )}
                 </div>
             </div>
-            <TextMessageBox
+            <TextMessageBoxSelect
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a corregir"
                 enableCorrections={false}
                 isLoading={isLoading}
+				selectable={}
             />
         </div>
     );

@@ -4,7 +4,7 @@ import type {
 } from "../../shared/interfaces/index.interfaces";
 import { CONSTANTS } from "../constants/config.constant";
 import { endpoints } from "../constants/endpoints.constant";
-import { manageError } from "../helpers/index.helpers";
+import { manageError } from "../../shared/helpers/index.helpers";
 
 export const orthographyUseCase = async (
   prompt: string

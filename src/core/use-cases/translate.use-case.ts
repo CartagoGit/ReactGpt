@@ -4,7 +4,7 @@ import {
   ITranslateResponse,
 } from "../../shared/interfaces/index.interfaces";
 import { CONSTANTS, endpoints } from "../constants/index.constants";
-import { manageError } from "../helpers/index.helpers";
+import { manageError } from "../../shared/helpers/index.helpers";
 
 export const translateUseCase = async (
   prompt: string,

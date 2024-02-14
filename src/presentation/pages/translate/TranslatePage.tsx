@@ -46,7 +46,8 @@ export const TranslatePage = () => {
                 placeholder="Escribe un texto a traducir."
                 enableCorrections
                 isLoading={isLoading}
-                options={langsOptions}
+                selectable={langsOptions}
+                selectableByDefault={langsOptions.Español}
             />
         </div>
     );
