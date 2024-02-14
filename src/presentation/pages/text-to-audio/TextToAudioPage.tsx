@@ -12,7 +12,10 @@ import {
 } from "../../../core/constants/index.constants";
 import { textToAudioUseCase } from "../../../core/use-cases/text-to-audio.use-case";
 import { useError } from "../../../shared/hooks/index.hooks";
-import type { ISelectOption } from "../../../shared/interfaces/index.interfaces";
+import type {
+    ISelectOption,
+    ITextToAudioResponse,
+} from "../../../shared/interfaces/index.interfaces";
 import { GptMessageAudio } from "../../components/chat-bubbles/GptMessageAudio";
 
 const initMessage: IMessage = {
@@ -22,8 +25,9 @@ const initMessage: IMessage = {
 
 export const TextToAudioPage = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [messages, setMessages] = useState<IMessage[]>([initMessage]);
-    const [streamData, setStreamData] = useState<Uint8Array | null>(null);
+    const [messages, setMessages] = useState<
+        IMessage<ITextToAudioResponse["data"]>[]
+    >([initMessage]);
     const setError = useError(setMessages);
 
     const handlePost = async (props: {
@@ -42,28 +46,15 @@ export const TextToAudioPage = () => {
         try {
             const resp = await textToAudioUseCase(text, { voice });
             if (!resp.ok) return setError(resp);
-            const { stream } = resp;
 
-            setMessages((prev) => [
-                ...prev,
-                {
-                    isGpt: true,
-                    text: `Texto convertido con la voz: ${selectedOption.label}`,
-                },
-            ]);
-            while (true) {
-                const { done, value } = await stream.read();
-                if (done) break;
-                setStreamData(value);
-                setMessages(([...prev]) => {
-                    const lastMessage = prev.at(-1);
-                    if (!lastMessage?.isGpt)
-                        throw new Error("El último mensaje no es de GPT.");
-                    lastMessage.info = value;
-                    prev[prev.length - 1] = lastMessage;
-                    return prev;
-                });
-            }
+            setMessages(([...prev]) => {
+                const lastMessage = prev.at(-1);
+                if (!lastMessage?.isGpt)
+                    throw new Error("El último mensaje no es de GPT.");
+                lastMessage.info = resp;
+                prev[prev.length - 1] = lastMessage;
+                return prev;
+            });
         } catch (error: any) {
             let errorMessage =
                 "Ocurrió un error leyendo la respuesta del servidor.";
@@ -102,7 +93,6 @@ export const TextToAudioPage = () => {
                 isLoading={isLoading}
                 selectable={voicesSelectables}
                 selectableByDefault={voicesSelectables.onyx}
-          
             />
         </div>
     );

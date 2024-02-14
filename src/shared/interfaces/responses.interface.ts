@@ -39,6 +39,4 @@ export interface ITextToAudioResponse {
     getter_url?: string;
   };
 }
-export interface ITextToAudioStreamResponse {
-  stream: ReadableStreamDefaultReader<Uint8Array>;
-}
+// 

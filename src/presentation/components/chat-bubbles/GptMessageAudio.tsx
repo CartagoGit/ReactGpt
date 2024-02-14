@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { IMessage } from "../../../shared/interfaces/message.interface";
+import { ITextToAudioResponse } from "../../../shared/interfaces/responses.interface";
 
 export const GptMessageAudio = ({
     text,
     errorMessage = undefined,
-    info: stream,
-}: IMessage<ReadableStreamDefaultReader>) => {
+    info: resp,
+}: IMessage<ITextToAudioResponse["data"]>) => {
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     useEffect(() => {
         if (isPlaying) audioRef.current?.play();
         else audioRef.current?.pause();
     }, [isPlaying]);
-    const togglePlay = () => {
-        setIsPlaying(!isPlaying);
-    };
+    // const togglePlay = () => {
+    //     setIsPlaying(!isPlaying);
+    // };
 
     return (
         <div className="col-start-1 col-end-9 p-3 rounded-lg">
@@ -24,9 +25,13 @@ export const GptMessageAudio = ({
                 </div>
                 <div className="relative flex flex-col gap-3 px-4 py-2 ml-3 text-sm whitespace-pre-line bg-black bg-opacity-25 shadow rounded-xl">
                     <div>{text}</div>
-                    {!!stream && (
+                    {!!resp && (
                         <div className="flex items-center gap-4">
-                            <audio className="h-[40px]" ref={audioRef} controls />
+                            <audio
+                                className="h-[40px]"
+                                ref={audioRef}
+                                controls
+                            />
                             <i className="text-2xl text-pink-700 transition ease-out cursor-pointer transitio-colors fa-solid fa-download hover:text-pink-900"></i>
                             {/* <button onClick={togglePlay}>
                             {isPlaying ? "Pause" : "Play"}

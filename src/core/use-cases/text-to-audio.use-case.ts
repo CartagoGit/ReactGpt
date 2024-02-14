@@ -1,7 +1,7 @@
 import type { voices } from "../constants/voices.constant";
 import type {
   IFetch,
-  ITextToAudioStreamResponse,
+  ITextToAudioResponse,
 } from "../../shared/interfaces/index.interfaces";
 import { manageError } from "../../shared/helpers/index.helpers";
 import { CONSTANTS, endpoints } from "../constants/index.constants";
@@ -9,7 +9,7 @@ import { CONSTANTS, endpoints } from "../constants/index.constants";
 export const textToAudioUseCase = async (
   prompt: string,
   options: { voice: (typeof voices)[number] }
-): IFetch<ITextToAudioStreamResponse> => {
+): IFetch<ITextToAudioResponse> => {
   const errorMessage = "No se pudo realizar la conversión de texto a audio";
   try {
     const { voice } = options;
@@ -22,10 +22,12 @@ export const textToAudioUseCase = async (
       }
     );
     if (!resp.ok) throw resp;
-    const reader = resp.body?.getReader();
-    if (!reader)
-      throw new Error(`${errorMessage}. Problema al generar el lector`);
-    return { ok: true, stream: reader };
+    const { data }: ITextToAudioResponse = await resp.json();
+    return {
+      ok: true,
+      gptMessage: "Data recived",
+      ...data,
+    };
   } catch (error) {
     return manageError({ error: error as Response, message: errorMessage });
   }
