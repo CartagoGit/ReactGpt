@@ -47,14 +47,10 @@ export const TextToAudioPage = () => {
             const resp = await textToAudioUseCase(text, { voice });
             if (!resp.ok) return setError(resp);
 
-            setMessages(([...prev]) => {
-                const lastMessage = prev.at(-1);
-                if (!lastMessage?.isGpt)
-                    throw new Error("El último mensaje no es de GPT.");
-                lastMessage.info = resp;
-                prev[prev.length - 1] = lastMessage;
-                return prev;
-            });
+            setMessages((prev) => [
+                ...prev,
+                { text: "Audio generado", isGpt: true, info: resp },
+            ]);
         } catch (error: any) {
             let errorMessage =
                 "Ocurrió un error leyendo la respuesta del servidor.";

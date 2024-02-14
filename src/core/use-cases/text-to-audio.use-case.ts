@@ -14,7 +14,7 @@ export const textToAudioUseCase = async (
   try {
     const { voice } = options;
     const resp = await fetch(
-      `${CONSTANTS.API_GPT_URL}${endpoints.textToAudio.stream}`,
+      `${CONSTANTS.API_GPT_URL}${endpoints.textToAudio.data}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
