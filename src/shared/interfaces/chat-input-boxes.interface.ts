@@ -16,12 +16,12 @@ export interface ITextMessageBoxProps {
   onAbortStream?: () => void;
 }
 
-export type ITextMessageBoxSelectProps =
-  ITextMessageBoxProps & {
-    onSendMessage: (props: ISendMessageProps) => void;
-    selectable: Record<string, ISelectOption>;
-    selectableByDefault?: ISelectOption;
-  };
+export type ITextMessageBoxSelectProps = ITextMessageBoxProps & {
+  onSendMessage: (props: ISendMessageProps) => void;
+  selectable: Record<string, ISelectOption>;
+  selectableByDefault?: ISelectOption;
+  fileToDownload?: any;
+};
 
 export type ITextMessageBoxFileProps = ITextMessageBoxProps & {
   accept?: React.InputHTMLAttributes<HTMLInputElement>["accept"];
