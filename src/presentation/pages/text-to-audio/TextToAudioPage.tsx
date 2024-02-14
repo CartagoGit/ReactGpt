@@ -13,6 +13,7 @@ import {
 } from "../../../core/constants/index.constants";
 import { textToAudioUseCase } from "../../../core/use-cases/text-to-audio.use-case";
 import { useError } from "../../../shared/hooks/index.hooks";
+import type { ISelectOption } from "../../../shared/interfaces/index.interfaces";
 
 const initMessage: IMessage = {
     text: "Hola, escribe un texto y te lo dire oralmente.",
@@ -24,12 +25,14 @@ export const TextToAudioPage = () => {
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
     const setError = useError(setMessages);
 
-    const handlePost = async (props: {
+    const handlePost = async<T extends string>(props: {
         text: string;
-        voice: (typeof voices)[number];
+        selectedOption: ISelectOption<T>;
     }) => {
         if (isLoading) return;
-        const { text, voice } = props;
+        const { text, selectedOption } = props;
+        const voice = selectedOption.label;
+
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
         try {
@@ -73,7 +76,7 @@ export const TextToAudioPage = () => {
                     )}
                 </div>
             </div>
-            <TextMessageBoxSelect
+            <TextMessageBoxSelect<typeof voices[number]>
                 onSendMessage={handlePost}
                 placeholder="Escribe el texto a convertir en audio."
                 enableCorrections={false}
