@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { UserMessage } from "../../components/chat-bubbles/UserMessage";
 import {
-    GptMessageOrthography,
     TextMessageBoxSelect,
     TypingLoader,
 } from "../../components/index.components";
@@ -14,6 +13,7 @@ import {
 import { textToAudioUseCase } from "../../../core/use-cases/text-to-audio.use-case";
 import { useError } from "../../../shared/hooks/index.hooks";
 import type { ISelectOption } from "../../../shared/interfaces/index.interfaces";
+import { GptMessageAudio } from "../../components/chat-bubbles/GptMessageAudio";
 
 const initMessage: IMessage = {
     text: "Hola, escribe un texto y te lo dire con una voz.",
@@ -23,6 +23,7 @@ const initMessage: IMessage = {
 export const TextToAudioPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [messages, setMessages] = useState<IMessage[]>([initMessage]);
+    const [streamData, setStreamData] = useState<Uint8Array | null>(null);
     const setError = useError(setMessages);
 
     const handlePost = async (props: {
@@ -31,15 +32,9 @@ export const TextToAudioPage = () => {
     }): Promise<void> => {
         if (isLoading) return;
         const { text, selectedOption } = props;
-        if (!selectedOption) {
-            return setError({
-                ok: false,
-                message: "No se ha seleccionado una voz para el audio.",
-                error: new Error(
-                    "No se ha seleccionado una voz para el audio."
-                ),
-            });
-        }
+        if (!selectedOption)
+            throw new Error("No se ha seleccionado una voz para el audio.");
+
         const voice = selectedOption.label as (typeof voices)[number];
 
         setIsLoading(true);
@@ -48,7 +43,27 @@ export const TextToAudioPage = () => {
             const resp = await textToAudioUseCase(text, { voice });
             if (!resp.ok) return setError(resp);
             const { stream } = resp;
-            // TODO Añadir la respuesta con audio al que se pueda pulsar en el play y guardar el archivo para que se pueda descargar
+
+            setMessages((prev) => [
+                ...prev,
+                {
+                    isGpt: true,
+                    text: `Texto convertido con la voz: ${selectedOption.label}`,
+                },
+            ]);
+            while (true) {
+                const { done, value } = await stream.read();
+                if (done) break;
+                setStreamData(value);
+                setMessages(([...prev]) => {
+                    const lastMessage = prev.at(-1);
+                    if (!lastMessage?.isGpt)
+                        throw new Error("El último mensaje no es de GPT.");
+                    lastMessage.info = value;
+                    prev[prev.length - 1] = lastMessage;
+                    return prev;
+                });
+            }
         } catch (error: any) {
             let errorMessage =
                 "Ocurrió un error leyendo la respuesta del servidor.";
@@ -68,12 +83,7 @@ export const TextToAudioPage = () => {
                     {messages.map((message, index) => {
                         const { isGpt, text } = message;
                         if (isGpt) {
-                            return (
-                                <GptMessageOrthography
-                                    key={index}
-                                    {...message}
-                                />
-                            );
+                            return <GptMessageAudio key={index} {...message} />;
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }
@@ -92,6 +102,7 @@ export const TextToAudioPage = () => {
                 isLoading={isLoading}
                 selectable={voicesSelectables}
                 selectableByDefault={voicesSelectables.onyx}
+                fileToDownload={streamData}
             />
         </div>
     );

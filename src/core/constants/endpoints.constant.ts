@@ -8,8 +8,8 @@ export const endpoints = {
   },
   transalte: "/translate",
   textToAudio: {
-    audio: "/text-to-audio",
-    stream: "/text-to-audio/stream",
-    data: "/text-to-audio/data",
+    audio: "/text-to-voice",
+    stream: "/text-to-voice/stream",
+    data: "/text-to-voice/data",
   },
 } as const;
