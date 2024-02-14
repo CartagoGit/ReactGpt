@@ -9,14 +9,17 @@ export const GptMessageAudio = ({
     isError = false,
 }: IMessage<ITextToAudioResponse["data"]>) => {
     const audioRef = useRef<HTMLAudioElement>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    useEffect(() => {
-        if (isPlaying) audioRef.current?.play();
-        else audioRef.current?.pause();
-    }, [isPlaying]);
-    // const togglePlay = () => {
-    //     setIsPlaying(!isPlaying);
-    // };
+
+    const handleDownload = async () => {
+        if (!resp) return;
+        const resAudio = await fetch(resp.getter_url!);
+        const blob = await resAudio.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = resp.file_name;
+        a.click();
+    };
 
     return (
         <div className="col-start-1 col-end-9 p-3 rounded-lg">
@@ -32,11 +35,12 @@ export const GptMessageAudio = ({
                                 className="h-[40px]"
                                 ref={audioRef}
                                 controls
+                                src={resp.getter_url}
                             />
-                            <i className="text-2xl text-pink-700 transition ease-out cursor-pointer transitio-colors fa-solid fa-download hover:text-pink-900"></i>
-                            {/* <button onClick={togglePlay}>
-                            {isPlaying ? "Pause" : "Play"}
-                        </button> */}
+                            <i
+                                className="text-2xl text-pink-700 transition ease-out cursor-pointer transitio-colors fa-solid fa-download hover:text-pink-900"
+                                onClick={handleDownload}
+                            ></i>
                         </div>
                     )}
                     {errorMessage && (
