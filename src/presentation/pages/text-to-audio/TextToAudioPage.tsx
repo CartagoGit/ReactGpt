@@ -70,7 +70,17 @@ export const TextToAudioPage = () => {
                     {messages.map((message, index) => {
                         const { isGpt, text } = message;
                         if (isGpt) {
-                            return <GptMessageAudio key={index} {...message} />;
+                            return (
+                                <GptMessageAudio
+                                    key={index}
+                                    adviceMessage={
+                                        index === 0
+                                            ? "Todo el audio será generado por una IA."
+                                            : undefined
+                                    }
+                                    {...message}
+                                />
+                            );
                         } else {
                             return <UserMessage key={index} text={text} />;
                         }

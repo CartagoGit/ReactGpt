@@ -6,6 +6,7 @@ export interface IMessage<T = any> {
   isError?: boolean;
   info?: T;
   errorMessage?: string;
+  adviceMessage?: string;
 }
 
 export type IMesssageOrthography = IMessage<IOrthographyResponse["data"]>;

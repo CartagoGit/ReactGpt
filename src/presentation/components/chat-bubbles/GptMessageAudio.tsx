@@ -7,6 +7,7 @@ export const GptMessageAudio = ({
     errorMessage = undefined,
     info: resp,
     isError = false,
+    adviceMessage = undefined,
 }: IMessage<ITextToAudioResponse["data"]>) => {
     const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -29,6 +30,9 @@ export const GptMessageAudio = ({
                 </div>
                 <div className="relative flex flex-col gap-3 px-4 py-2 ml-3 text-sm whitespace-pre-line bg-black bg-opacity-25 shadow rounded-xl">
                     <div className={isError ? "text-red-700" : ""}>{text}</div>
+                    {!!adviceMessage && (
+                        <div className="text-xs text-pink-700">{adviceMessage}</div>
+                    )}
                     {!!resp && (
                         <div className="flex items-center gap-4">
                             <audio
