@@ -12,4 +12,4 @@ export const voices = [
 export const {
   listSelectables: voicesListSelectables,
   objectSelectables: voicesSelectables,
-} = arrayToSelectable(voices);
+} = arrayToSelectable(voices, { capitalizeLabels: true });
