@@ -5,6 +5,7 @@ export const GptMessage = ({
     text,
     isError = false,
     errorMessage = undefined,
+    adviceMessage = undefined,
 }: IMessage) => {
     return (
         <div className="col-start-1 col-end-9 p-3 rounded-lg">
@@ -16,6 +17,9 @@ export const GptMessage = ({
                     <Markdown className={isError ? "text-red-700" : null}>
                         {text}
                     </Markdown>
+                    {!!adviceMessage && (
+                        <div className="text-xs text-pink-700">{adviceMessage}</div>
+                    )}
                     {errorMessage && (
                         <div className="text-red-700">{errorMessage}</div>
                     )}

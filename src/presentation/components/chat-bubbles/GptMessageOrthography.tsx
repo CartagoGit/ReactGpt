@@ -5,15 +5,16 @@ export const GptMessageOrthography = ({
     text,
     info,
     isError = false,
+    adviceMessage = undefined,
 }: IMesssageOrthography) => {
     const { accuracy, errors, message } = info || {};
     return (
         <div className="col-start-1 col-end-9 p-3 rounded-lg">
             <div className="flex flex-row items-start">
-                <div className="flex items-center justify-center h-10 w-10 rounded-full bg-green-600 flex-shrink-0">
+                <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-green-600 rounded-full">
                     Gpt
                 </div>
-                <div className="relative ml-3 text-sm bg-black bg-opacity-25 py-2 px-4 shadow rounded-xl whitespace-pre-line">
+                <div className="relative px-4 py-2 ml-3 text-sm whitespace-pre-line bg-black bg-opacity-25 shadow rounded-xl">
                     {!info ? (
                         <Markdown className={isError ? "text-red-700" : null}>
                             {text}
@@ -22,7 +23,7 @@ export const GptMessageOrthography = ({
                         <>
                             <h3 className="text-xl">Corrección:</h3>
                             <p>{text}</p>
-                            <h3 className="text-xl mt-4">
+                            <h3 className="mt-4 text-xl">
                                 Precisión: {accuracy}%
                             </h3>
                             <p>{message}</p>
@@ -39,6 +40,11 @@ export const GptMessageOrthography = ({
                                 </>
                             )}
                         </>
+                    )}
+                    {!!adviceMessage && (
+                        <div className="text-xs text-pink-700">
+                            {adviceMessage}
+                        </div>
                     )}
                 </div>
             </div>
