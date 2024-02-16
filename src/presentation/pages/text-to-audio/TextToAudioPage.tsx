@@ -11,7 +11,7 @@ import {
     voicesSelectables,
 } from "../../../core/constants/index.constants";
 import { textToAudioUseCase } from "../../../core/use-cases/text-to-audio.use-case";
-import { useError } from "../../../shared/hooks/index.hooks";
+import { useError, useScrollToBottom } from "../../../shared/hooks/index.hooks";
 import type {
     ISelectOption,
     ITextToAudioResponse,
@@ -29,6 +29,7 @@ export const TextToAudioPage = () => {
         IMessage<ITextToAudioResponse["data"]>[]
     >([initMessage]);
     const setError = useError(setMessages);
+	const chatRef = useScrollToBottom(messages);
 
     const handlePost = async (props: {
         text: string;
@@ -39,7 +40,7 @@ export const TextToAudioPage = () => {
         if (!selectedOption)
             throw new Error("No se ha seleccionado una voz para el audio.");
 
-        const voice = selectedOption.label as (typeof voices)[number];
+        const voice = selectedOption.label.toLowerCase() as (typeof voices)[number];
 
         setIsLoading(true);
         setMessages((prev) => [...prev, { text, isGpt: false }]);
@@ -64,7 +65,7 @@ export const TextToAudioPage = () => {
 
     return (
         <div className="chat-container">
-            <div className="chat-messages">
+            <div className="chat-messages" ref={chatRef}>
                 <div className="grid grid-cols-12 gap-y-2">
                     {/* Bienvenida */}
                     {messages.map((message, index) => {

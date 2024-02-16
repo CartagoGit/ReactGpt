@@ -19,6 +19,5 @@ export const arrayToSelectable = <T extends string>(
     objectSelectables[element as T] = option;
     return option;
   });
-
   return { objectSelectables, listSelectables };
 };
