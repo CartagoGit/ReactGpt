@@ -2,9 +2,9 @@ import type {
   IFetch,
   IProConDicusserResponse,
 } from "../../shared/interfaces/index.interfaces";
-import { CONSTANTS } from "../constants/config.constant";
-import { endpoints } from "../constants/endpoints.constant";
+
 import { manageError } from "../../shared/helpers/index.helpers";
+import { CONSTANTS, ENDPOINTS } from "../constants/index.constants";
 
 export const proConDicusserUseCase = async (
   prompt: string
@@ -12,7 +12,7 @@ export const proConDicusserUseCase = async (
   const errorMessage = "No se pudo realizar la comparación de pros y contras";
   try {
     const resp = await fetch(
-      `${CONSTANTS.API_GPT_URL}${endpoints.proCon.dicusser}`,
+      `${CONSTANTS.API_GPT_URL}${ENDPOINTS.PRO_CON.DICUSSER}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

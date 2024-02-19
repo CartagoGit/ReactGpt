@@ -3,7 +3,7 @@ import type {
   IProConStreamResponse,
 } from "../../shared/interfaces/index.interfaces";
 import { manageError } from "../../shared/helpers/index.helpers";
-import { CONSTANTS, endpoints } from "../constants/index.constants";
+import { CONSTANTS, ENDPOINTS } from "../constants/index.constants";
 
 export const proConStreamUseCase = async (
   prompt: string,
@@ -13,7 +13,7 @@ export const proConStreamUseCase = async (
   try {
     const { abortSignal } = options || {};
     const resp = await fetch(
-      `${CONSTANTS.API_GPT_URL}${endpoints.proCon.stream}`,
+      `${CONSTANTS.API_GPT_URL}${ENDPOINTS.PRO_CON.STREAM}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

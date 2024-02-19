@@ -3,7 +3,7 @@ import {
   IFetch,
   ITranslateResponse,
 } from "../../shared/interfaces/index.interfaces";
-import { CONSTANTS, endpoints } from "../constants/index.constants";
+import { CONSTANTS, ENDPOINTS } from "../constants/index.constants";
 import { manageError } from "../../shared/helpers/index.helpers";
 
 export const translateUseCase = async (
@@ -15,7 +15,7 @@ export const translateUseCase = async (
   const errorMessage = "No se pudo realizar la traducción.";
   try {
     const { lang } = options || {};
-    const resp = await fetch(`${CONSTANTS.API_GPT_URL}${endpoints.transalte}`, {
+    const resp = await fetch(`${CONSTANTS.API_GPT_URL}${ENDPOINTS.TRANSLATE}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ prompt, lang: lang?.label }),

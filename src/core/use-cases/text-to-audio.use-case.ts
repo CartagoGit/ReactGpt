@@ -4,7 +4,7 @@ import type {
   ITextToAudioResponse,
 } from "../../shared/interfaces/index.interfaces";
 import { manageError } from "../../shared/helpers/index.helpers";
-import { CONSTANTS, endpoints } from "../constants/index.constants";
+import { CONSTANTS, ENDPOINTS } from "../constants/index.constants";
 
 export const textToAudioUseCase = async (
   prompt: string,
@@ -14,7 +14,7 @@ export const textToAudioUseCase = async (
   try {
     const { voice } = options;
     const resp = await fetch(
-      `${CONSTANTS.API_GPT_URL}${endpoints.textToAudio.data}`,
+      `${CONSTANTS.API_GPT_URL}${ENDPOINTS.TEXT_TO_AUDIO.DATA}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

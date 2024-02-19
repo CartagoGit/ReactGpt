@@ -1,15 +1,15 @@
-export const endpoints = {
-  orthography: {
-    check: "/orthography/check",
+export const ENDPOINTS = {
+  ORTHOGRAPHY: {
+    CHECK: "/orthography/check",
   },
-  proCon: {
-    dicusser: "/pro-con/dicusser",
-    stream: "/pro-con/stream",
+  PRO_CON: {
+    DICUSSER: "/pro-con/dicusser",
+    STREAM: "/pro-con/stream",
   },
-  transalte: "/translate",
-  textToAudio: {
-    audio: "/text-to-voice",
-    stream: "/text-to-voice/stream",
-    data: "/text-to-voice/data",
+  TRANSLATE: "/translate",
+  TEXT_TO_AUDIO: {
+    AUDIO: "/text-to-voice",
+    STREAM: "/text-to-voice/stream",
+    DATA: "/text-to-voice/data",
   },
 } as const;
