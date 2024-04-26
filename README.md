@@ -36,3 +36,6 @@
     - https://socket.dev/npm/package/@cartago-git/keyer
     - https://www.npmjs.com/package/@cartago-git/keyer
     - https://github.com/CartagoGit/Keyer.git
+
+# Idea
+Create monorepo with NestGpt
