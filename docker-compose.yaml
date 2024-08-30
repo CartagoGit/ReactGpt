@@ -13,8 +13,5 @@ services:
     volumes:
       - .:/_projects/${PROJECT}
     command: ["sh", "-c", "bun i && bun run dev"]
-    restart: always
     tty: true
     init: true
-    ulimits:
-      memlock: -1
